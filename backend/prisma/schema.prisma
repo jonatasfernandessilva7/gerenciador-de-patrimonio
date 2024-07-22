@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Usuario {
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  nome       String
+  senha      String
+  patrimonio Patrimonio[]
+}
+
+model Patrimonio {
+  id         Int          @id @default(autoincrement())
+  bens       Bens[]
+  direitos   Direitos[]
+  obrigacoes Obrigacoes[]
+  usuarioId  Int
+  usuario    Usuario      @relation(fields: [usuarioId], references: [id])
+}
+
+model Bens {
+  id                  Int                        @id @default(autoincrement())
+  imoveis             Imovel[]
+  terrenos            Terreno[]
+  veiculos            Veiculo[]
+  participacoes       ParticipacoesSocietarias[]
+  outrosinvestimentos OutrosInvestimentos[]
+  patrimonioId        Int
+  compoePatrimonio      Patrimonio                 @relation(fields: [patrimonioId], references: [id])
+}
+
+model Direitos {
+  id             Int        @id @default(autoincrement())
+  valor          Float
+  anoDeEntrada   DateTime
+  patrimonioId   Int
+  compoePatrimonio Patrimonio @relation(fields: [patrimonioId], references: [id])
+}
+
+model Obrigacoes {
+  id             Int        @id @default(autoincrement())
+  valor          Float
+  anoDeEntrada   DateTime
+  patrimonioId   Int
+  compoePatrimonio Patrimonio @relation(fields: [patrimonioId], references: [id])
+}
+
+model Imovel {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  valor       Decimal
+  anoDeCompra DateTime
+  depreciacao Decimal
+  bemId       Int
+  bem         Bens     @relation(fields: [bemId], references: [id])
+}
+
+model Terreno {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  valor       Decimal
+  anoDeCompra DateTime
+  depreciacao Decimal
+  bemId       Int
+  bem         Bens     @relation(fields: [bemId], references: [id])
+}
+
+model Veiculo {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  valor       Decimal
+  anoDeCompra DateTime
+  depreciacao Decimal
+  bemId       Int
+  bem         Bens     @relation(fields: [bemId], references: [id])
+}
+
+model ParticipacoesSocietarias {
+  id          Int      @id @default(autoincrement())
+  tipo        String
+  descricao   String?
+  valor       Decimal
+  anoDeCompra DateTime
+  bemId       Int
+  bem         Bens     @relation(fields: [bemId], references: [id])
+}
+
+model OutrosInvestimentos {
+  id          Int      @id @default(autoincrement())
+  tipo        String
+  descricao   String?
+  valor       Decimal
+  anoDeCompra DateTime
+  bemId       Int
+  bem         Bens     @relation(fields: [bemId], references: [id])
+}
