@@ -40,17 +40,24 @@ class UsuarioController {
     async login(req, res) {
         try {
             const { email, senha } = req.body;
-            let searchUser = await userService.buscaUsuarioPorEmail(email);
-            if (searchUser === null) {
-                return res.status(400).json({ message: 'user not found' })
-            } else {
+    
+            // Validação do login usando o método da classe Validacao
+            const result = await validation.validarLogin(email, senha);
+    
+            // Verifica o resultado da validação
+            if (result === "Login válido") {
+                // Se o login for válido, retorna os dados do usuário
                 res.json({
                     message: "ok",
-                    user: searchUser,
+                    user: { email }, // Aqui poderia ser searchUser, dependendo do que se deseja retornar
                 });
+            } else {
+                // Se o login não for válido, retorna mensagem de erro
+                res.status(400).json({ message: 'Senha incorreta' }); // Ou outra mensagem de erro adequada
             }
         } catch (error) {
-            res.json({ error })
+            console.error("Erro ao processar login:", error);
+            res.status(500).json({ error: "Erro ao processar login, por favor tente novamente mais tarde" });
         }
     }
 
