@@ -13,6 +13,6 @@ router.post('/usuario/login/home', usuarioController.login);
 router.post('/usuario/Contato/:id', ajuda);
 router.put('/usuario/perfil/:id', usuarioController.atualizarDadosDoUsuario);
 router.put('/usuario/recuperacao/inserirNovaSenha', usuarioController.atualizarSenha);
-router.del('/usuario/recuperacao/deletarConta/:id', usuarioController.deletarConta);
+router.delete('/usuario/recuperacao/deletarConta/:id', usuarioController.deletarConta);
 
 module.exports = router;

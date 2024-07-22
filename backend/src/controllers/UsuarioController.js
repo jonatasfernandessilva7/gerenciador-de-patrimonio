@@ -113,14 +113,14 @@ class UsuarioController {
 
         const { email } = req.body;
 
-        let buscaADeletar = await admService.buscaUsuarioADeletar(email);
+        let buscaADeletar = await userService.buscaUsuarioPorEmail(email);
 
         try {
 
             if (buscaADeletar) {
                 try {
-                    let alunoADeletar = await admService.deleteUsuario(email);
-                    res.send("ok")
+                    let alunoADeletar = await userService.deleteUser(email);
+                    res.send("ok");
                 } catch (erro) {
                     res.json(buscaADeletar)
                     res.send("error" + erro);
