@@ -1,9 +1,14 @@
 import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity } from "react-native";
 
+import { AntDesign } from '@expo/vector-icons';
+
 export function AddPatrimonio({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
+      {/* <TouchableOpacity style={styles.icon}>
+        <AntDesign name="arrowleft" size={30} color="black" />
+      </TouchableOpacity> */}
         <View style={styles.main}>
           <View style={styles.contentTitle}>
             <Text style={styles.title}>Adicionar patrimônio</Text>
@@ -12,29 +17,18 @@ export function AddPatrimonio({ navigation }) {
 
           <View style={styles.contentInput}>
             <View style={styles.boxInput}>
-              <Text style={styles.label}>Email</Text>
+              <Text style={styles.label}>Tipo de Patrimônio</Text>
               <TextInput
                   style={styles.input}
                   minHeight= {20}
                   maxLength={40}
                   //onChangeText={onChangeNumber}
-                  placeholder="email@gmail.com"
+                  placeholder="Casa"
               />
             </View>
 
             <View style={styles.boxInput}>
-              <Text style={styles.label}>Valor inicial</Text>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {1}
-                  maxLength={6}
-                  //onChangeText={onChangeNumber}
-                  placeholder="R$ 0,00"
-              />
-            </View>
-
-            <View style={styles.boxInput}>
-              <Text style={styles.label}>Valor final</Text>
+              <Text style={styles.label}>Valor do Imóvel</Text>
               <TextInput
                   style={styles.input}
                   minHeight= {1}
@@ -60,7 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     minWidth: "100%",
     marginHorizontal: "auto",
-    marginVertical: "auto",
     backgroundColor: "#fff"
   },
   main: {
@@ -71,8 +64,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#003B52",
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: "bold",
+    marginTop: 30,
     textAlign: "justify"
   },
   subtitle: {
@@ -83,12 +77,12 @@ const styles = StyleSheet.create({
   },
   contentInput: {
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 50,
     marginBottom: 40
   },
   boxInput: {
     width: "100%",
-    marginBottom: 20
+    marginBottom: 30
   },
   label: {
     width: "100%",
@@ -116,6 +110,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 10,
     marginTop: 60,
+    marginBottom: 60,
     marginHorizontal: "auto"
   },
   textButton: {
@@ -124,5 +119,8 @@ const styles = StyleSheet.create({
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  icon: {
+    marginLeft: 20
   }
 });

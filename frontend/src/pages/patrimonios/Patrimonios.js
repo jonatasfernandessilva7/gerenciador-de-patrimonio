@@ -14,11 +14,11 @@ export function Patrimonios({ navigation }) {
           <Text style={styles.title}>Meus Patrimônios</Text>
 
           <View style={styles.main}>
-            <Card nomePatrimonio={"Casa Própria"}/>
-            <Card nomePatrimonio={"Apartamento"}/>
-            <Card nomePatrimonio={"Apartamento"}/>
-            <Card nomePatrimonio={"Loja"}/>
-            <Card nomePatrimonio={"Automóvel"}/>
+            <Card nomePatrimonio={"Casa Própria"} valor={"60.000"}/>
+            <Card nomePatrimonio={"Apartamento"} valor={"60.000"}/>
+            <Card nomePatrimonio={"Apartamento"} valor={"60.000"}/>
+            <Card nomePatrimonio={"Loja"} valor={"60.000"}/>
+            <Card nomePatrimonio={"Automóvel"} valor={"60.000"}/>
           </View>
       </ScrollView>
     </SafeAreaView>
@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
     minWidth: "100%",
     minHeight: "100%",
     marginHorizontal: "auto",
-    backgroundColor: "#E3E3E3"
+    backgroundColor: "#FFF"
   },
   title: {
     width: "100%",
     textAlign: "center",
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "700",
     color: "#003B52",
     marginTop: 30,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   icon: {
-    marginTop: 25,
-    marginLeft: 25
+    marginTop: 60,
+    marginLeft: 20
   }
 });

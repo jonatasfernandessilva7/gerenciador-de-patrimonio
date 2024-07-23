@@ -17,7 +17,7 @@ export function Routes(){
                     headerShown: false,
                     tabBarIcon: ({ focused, size, color }) => {
                         if(focused){
-                            return <Ionicons size={size} color={"#005A7D"} name="home"/>
+                            return <Ionicons size={35} color={"#005A7D"} name="home"/>
                         }
 
                         return <Ionicons size={size} color={color} name="home-sharp"/>
@@ -32,7 +32,7 @@ export function Routes(){
                     headerShown: false,
                     tabBarIcon: ({ focused, size, color }) => {
                         if(focused){
-                            return <Ionicons size={size} color={"#005A7D"} name="person-circle"/>
+                            return <Ionicons size={35} color={"#005A7D"} name="person-circle"/>
                         }
 
                         return <Ionicons size={size} color={color} name="person-circle-outline"/>
@@ -47,7 +47,7 @@ export function Routes(){
                     headerShown: false,
                     tabBarIcon: ({ focused, size, color }) => {
                         if(focused){
-                            return <Ionicons size={size} color={"#005A7D"} name="alert-circle"/>
+                            return <Ionicons size={35} color={"#005A7D"} name="alert-circle"/>
                         }
 
                         return <Ionicons size={size} color={color} name="alert-circle-outline"/>

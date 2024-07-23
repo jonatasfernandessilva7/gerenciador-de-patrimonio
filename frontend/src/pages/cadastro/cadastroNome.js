@@ -1,9 +1,14 @@
 import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity } from "react-native";
 
+import { AntDesign } from '@expo/vector-icons';
+
 export function CadastroNome({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
+      <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('login') }>
+        <AntDesign name="arrowleft" size={30} color="black" />
+      </TouchableOpacity>
         <View style={styles.main}>
           <View style={styles.contentTitle}>
             <Text style={styles.title}>Qual o seu nome?</Text>
@@ -42,11 +47,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   contentTitle: {
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    marginTop: 30
   },
   title: {
     color: "#003B52",
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: "bold",
     textAlign: "justify"
   },
@@ -80,6 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "60%",
     marginTop: 150,
+    marginBottom: 60,
     marginHorizontal: "auto"
   },
   textButton: {
@@ -88,5 +95,8 @@ const styles = StyleSheet.create({
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  icon: {
+    marginLeft: 20
   }
 });

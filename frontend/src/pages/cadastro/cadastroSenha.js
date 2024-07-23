@@ -5,10 +5,10 @@ import { AntDesign } from '@expo/vector-icons';
 export function CadastroSenha({ navigation }) {
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('cadastroSenha') }>
+        <AntDesign name="arrowleft" size={30} color="black" />
+      </TouchableOpacity>
         <View style={styles.main}>
-          <TouchableOpacity style={styles.icon}>
-            <AntDesign name="arrowleft" size={24} color="black" />
-          </TouchableOpacity>
           <View style={styles.contentTitle}>
             <Text style={styles.title}>Defina uma senha</Text>
             <Text style={styles.subtitle}>Precisamos que digite um Pin para proteger seus dados.</Text>
@@ -33,6 +33,7 @@ export function CadastroSenha({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "center",
     minWidth: "100%",
     marginHorizontal: "auto",
@@ -46,9 +47,10 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#003B52",
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: "bold",
-    textAlign: "justify"
+    textAlign: "justify",
+    marginTop: 30
   },
   subtitle: {
     color: "#005A7D",
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "60%",
     marginTop: 150,
+    marginBottom: 60,
     marginHorizontal: "auto"
   },
   textButton: {
@@ -90,6 +93,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   icon: {
-    marginLeft: 25
+    marginLeft: 20
   }
 });

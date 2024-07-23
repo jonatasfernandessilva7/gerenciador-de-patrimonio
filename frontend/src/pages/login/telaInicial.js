@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     marginHorizontal: "auto",
-    marginTop: 100,
-    marginBottom: 100,
+    marginVertical: "30%"
   },
   button: {
     color: "#000",

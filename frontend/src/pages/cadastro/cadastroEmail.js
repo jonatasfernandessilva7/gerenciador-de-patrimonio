@@ -6,27 +6,29 @@ export function CadastroEmail({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
-      <AntDesign name="arrowleft" size={24} color="black" />
+      <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('cadastroNome') }>
+        <AntDesign name="arrowleft" size={30} color="black" />
+      </TouchableOpacity>
         <View style={styles.main}>
-          <View style={styles.contentTitle}>
-            <Text style={styles.title}>Qual o seu email?</Text>
-            <Text style={styles.subtitle}>Precisamos do seu e-mail para validação e segurança.</Text>
-          </View>
+            <View style={styles.contentTitle}>
+              <Text style={styles.title}>Qual o seu email?</Text>
+              <Text style={styles.subtitle}>Precisamos do seu e-mail para validação e segurança.</Text>
+            </View>
 
-          <View style={styles.contentInput}>
-            <TextInput
-                style={styles.input}
-                minHeight= {10}
-                maxLength={50}
-                //onChangeText={onChangeNumber}
-                placeholder="email@gmail.com"
-            />
-          </View>
+            <View style={styles.contentInput}>
+              <TextInput
+                  style={styles.input}
+                  minHeight= {10}
+                  maxLength={50}
+                  //onChangeText={onChangeNumber}
+                  placeholder="email@gmail.com"
+              />
+            </View>
 
-
-          <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('cadastroSenha') }>
-            <Text style={styles.textButton}>Avançar</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('cadastroSenha') }>
+              <Text style={styles.textButton}>Avançar</Text>
+            </TouchableOpacity>
+          
         </View>
     </View>
   );
@@ -36,20 +38,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    minWidth: "100%",
     marginHorizontal: "auto",
-    marginVertical: "auto",
     backgroundColor: "#fff"
   },
   main: {
     paddingHorizontal: 20
   },
   contentTitle: {
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    marginTop: 30
   },
   title: {
     color: "#003B52",
-    fontSize: 45,
+    fontSize: 35,
     fontWeight: "bold",
     textAlign: "justify"
   },
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "60%",
     marginTop: 150,
+    marginBottom: 60,
     marginHorizontal: "auto"
   },
   textButton: {
@@ -91,5 +93,8 @@ const styles = StyleSheet.create({
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  icon: {
+    marginLeft: 20
   }
 });

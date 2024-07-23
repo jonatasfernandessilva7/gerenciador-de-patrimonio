@@ -6,7 +6,7 @@ export function EditPatrimonio({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
-        <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('menu') }>
+        <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('Patrimonios') }>
           <AntDesign name="close" size={30} color="black" />
         </TouchableOpacity>
         <View style={styles.main}>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   boxButtton: {
     flexDirection: "row",
-    marginTop: 80,
+    marginVertical: 100
   },
   button: {
     width: "40%",

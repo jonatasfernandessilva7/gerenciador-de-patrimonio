@@ -2,10 +2,10 @@ import { SafeAreaView , StyleSheet, Text, View, TouchableOpacity } from "react-n
 
 import { AntDesign } from '@expo/vector-icons';
 
-export function Card({ navigation, nomePatrimonio, valor }) {
+export function Card({ route, nomePatrimonio, valor }) {
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.item} onPress={ () => navigation.navigate('editPatrimonio') }>
+      <TouchableOpacity style={styles.item} onPress={route}>
         <View style={styles.descrition}>
           <Text style={styles.subtitle}>+ R$ {valor}</Text>
           <Text style={styles.title}>{nomePatrimonio}</Text>
