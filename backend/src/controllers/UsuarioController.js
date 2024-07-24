@@ -8,7 +8,7 @@ class UsuarioController {
     async criar(req, res) {
         try {
             const { nome, email, senha, senhaConfirm } = req.body;
-            const validationMessage = await validation.validarCadastro(senhaConfirm, senha, email);
+            const validationMessage = await validation.validarCadastro(email);
     
             if (validationMessage !== "Cadastro validado com sucesso") {
                 // Se a validação falhar, retornar a mensagem de erro
@@ -53,7 +53,7 @@ class UsuarioController {
                 });
             } else {
                 // Se o login não for válido, retorna mensagem de erro
-                res.status(400).json({ message: 'Senha incorreta' }); // Ou outra mensagem de erro adequada
+                res.status(400).json({ message: 'login incorreto' }); // Ou outra mensagem de erro adequada
             }
         } catch (error) {
             console.error("Erro ao processar login:", error);
