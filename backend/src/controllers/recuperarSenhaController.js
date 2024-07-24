@@ -1,5 +1,8 @@
-const recuperarSenhaService = require("../services/recuperarSenhaService");
-const sendEmail = require("../services/envioDeEmail");
+const UsuarioServico = require("../services/UserServices");
+const EnvioDeEmail = require("../services/EnvioDeEmail");
+
+const sendEmail = new EnvioDeEmail();
+const usuario = new UsuarioServico();
 
 const recuperandoSenha = async (req, res) => {
     try {
@@ -9,7 +12,7 @@ const recuperandoSenha = async (req, res) => {
             return res.status(400).json({ message: 'Email é obrigatório' });
         }
 
-        const searchUser = await recuperarSenhaService.buscaEmail(email);
+        const searchUser = await usuario.buscaUsuarioPorEmail(email);
         if (!searchUser) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
         }

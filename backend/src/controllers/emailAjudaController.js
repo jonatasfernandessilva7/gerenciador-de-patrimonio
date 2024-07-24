@@ -1,5 +1,8 @@
-const ajudaService = require("../services/ajudaService");
-const sendEmail = require("../services/envioDeEmail");
+const UsuarioServico = require("../services/UserServices");
+const EnvioDeEmail = require("../services/EnvioDeEmail");
+
+const sendEmail = new EnvioDeEmail();
+const usuario = new UsuarioServico();
 
 const enviandoDuvida = async (req, res) => {
     try {
@@ -10,7 +13,7 @@ const enviandoDuvida = async (req, res) => {
             return res.status(400).json({ message: 'Campos obrigatórios não fornecidos' });
         }
 
-        const searchUser = await ajudaService.buscaId(id);
+        const searchUser = await usuario.buscaUsuarioPorId(id);
         if (!searchUser) {
             return res.status(404).json({ message: 'Usuário não encontrado' });
         }
