@@ -1,13 +1,18 @@
-import { StatusBar, SafeAreaView , StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { StatusBar, SafeAreaView , StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+
 import { Card } from "../../components/cardPatrimonio"
 
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 import { AntDesign } from '@expo/vector-icons';
+
+const {height, width} = Dimensions.get("window")
 
 export function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.person}>Robert Michael</Text>
             <Text style={styles.valueTotal}>R$ 520,000</Text>
@@ -15,34 +20,35 @@ export function Home({ navigation }) {
 
           <View style={styles.main}>
             <View style={styles.boxButton}>
-              <View style={styles.contentButton}>
-                <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('addPatrimonio') }>
-                  <AntDesign name="plus" size={26} color="#FFF" />
-                </TouchableOpacity>
-                  <Text style={styles.labelButton}>Adicionar</Text>
-              </View>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                <View style={styles.contentButton}>
+                  <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('addPatrimonio') }>
+                    <AntDesign name="plus" size={24} color="#FFF" />
+                  </TouchableOpacity>
+                    <Text style={styles.labelButton}>Adicionar</Text>
+                </View>
 
-              <View style={styles.contentButton}>
-                <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Patrimonios') }>
-                  <AntDesign name="areachart" size={24} color="#FFF" />
-                </TouchableOpacity>
-                  <Text style={styles.labelButton}>Patrimônios</Text>
-              </View>
+                <View style={styles.contentButton}>
+                  <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Patrimonios') }>
+                    <AntDesign name="areachart" size={24} color="#FFF" />
+                  </TouchableOpacity>
+                    <Text style={styles.labelButton}>Patrimônios</Text>
+                </View>
 
-              <View style={styles.contentButton}>
-                <TouchableOpacity style={styles.button}>
-                  <AntDesign name="areachart" size={24} color="#FFF" />
-                </TouchableOpacity>
-                  <Text style={styles.labelButton}>Simulações</Text>
-              </View>
+                <View style={styles.contentButton}>
+                  <TouchableOpacity style={styles.button}>
+                    <AntDesign name="areachart" size={24} color="#FFF" />
+                  </TouchableOpacity>
+                    <Text style={styles.labelButton}>Simulações</Text>
+                </View>
 
-              <View style={styles.contentButton}>
-                <TouchableOpacity style={styles.button}>
-                  <AntDesign name="profile" size={24} color="#FFF" />
-                </TouchableOpacity>
-                  <Text style={styles.labelButton}>Sobre</Text>
-              </View>
-
+                <View style={styles.contentButton}>
+                  <TouchableOpacity style={styles.button}>
+                    <AntDesign name="profile" size={24} color="#FFF" />
+                  </TouchableOpacity>
+                    <Text style={styles.labelButton}>Sobre</Text>
+                </View>
+              </ScrollView>
             </View>
 
             <View style={styles.listPatrimonios}>
@@ -62,7 +68,8 @@ export function Home({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: wp(100),
+    height: hp(100),
     justifyContent: "center",
     minWidth: "100%",
     minHeight: "100%",
@@ -71,70 +78,70 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    width: "100%",
+    width: wp(100),
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#005A7D",
-    paddingTop: 100,
-    paddingBottom: 20,
-    paddingHorizontal: 20
+    paddingTop: hp(15),
+    paddingBottom: hp(2),
+    paddingHorizontal: wp(4)
   },
   person: {
-    color: "#fff",
-    fontSize: 26,
+    color: "#FFF",
+    fontSize: hp(2.8),
     fontWeight: "bold",
   },
   valueTotal: {
     color: "#005A7D",
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: hp(2.3),
+    fontWeight: "500",
     backgroundColor: "#fff",
-    paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingHorizontal: wp(3),
+    paddingVertical: hp(1),
     borderRadius: 15
   },
   main: {
-    paddingHorizontal: 20
+    width: wp(100),
+    marginBottom: hp(8)
   },
   boxButton: {
     flexDirection: "row",
-    width: "100%",
+    width: wp(100),
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginVertical: 55
+    marginVertical: hp(7)
   },
   contentButton: {
     alignItems: "center",
-    marginHorizontal: 15
+    marginHorizontal: wp(3.1)
   },
   labelButton: {
     color: "#333",
-    fontSize: 16,
+    fontSize: hp(2),
     fontWeight: "500",
-    marginTop: 10
+    marginTop: hp(1)
   },
   button: {
-    padding: 23,
+    paddingHorizontal: wp(6),
+    paddingVertical: hp(3),
     backgroundColor: "#005A7D",
     borderRadius: 50,
     boxButton: 2,
     borderWidth: 1,
     borderColor: "#005A7D"
   },
-  textButtton: {
-    fontSize: 20,
-    color: "#fff"
-  },
   listPatrimonios: {
-    width: "100%"
+    width: wp(100)
   },
   title: {
     color: "#003B52",
-    fontSize: 23,
+    fontSize: hp(3),
+    marginLeft: wp(4),
     fontWeight: "700"
   },
   list: {
-    marginTop: 30,
-    alignItems: "flex-start"
+    marginHorizontal: "auto",
+    marginTop: hp(4),
+    alignItems: "center"
   }
 });

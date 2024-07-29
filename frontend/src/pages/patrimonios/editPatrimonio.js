@@ -1,6 +1,12 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity } from "react-native";
+import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+import { Input } from "../../components/Form/Input";
 
 import { AntDesign } from '@expo/vector-icons';
+
+const {height, width} = Dimensions.get("window")
 
 export function EditPatrimonio({ navigation }) {
   return (
@@ -26,12 +32,10 @@ export function EditPatrimonio({ navigation }) {
 
             <View style={styles.boxInput}>
               <Text style={styles.label}>Valor do Imóvel</Text>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {1}
-                  maxLength={6}
-                  //onChangeText={onChangeNumber}
-                  placeholder="R$ 0,00"
+              <Input
+                minValue= {1}
+                maxValue={10}
+                placeholder={"R$ 0,00"}
               />
             </View>
 
@@ -52,49 +56,44 @@ export function EditPatrimonio({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    height: hp(100),
     justifyContent: "center",
     minWidth: "100%",
+    paddingHorizontal: wp(5),
     marginHorizontal: "auto",
+    marginVertical: "auto",
     backgroundColor: "#fff"
   },
   main: {
-    paddingHorizontal: 20
+    width: wp(90)
   },
   title: {
+    marginTop: hp(5),
     color: "#003B52",
-    fontSize: 30,
+    fontSize: hp(3.8),
     fontWeight: "bold",
-    textAlign: "justify",
     textAlign: "center",
-    marginTop: 20
-  },
-  subtitle: {
-    color: "#005A7D",
-    fontSize: 24,
-    marginTop: 10,
-    textAlign: "justify"
   },
   contentInput: {
-    alignItems: "center",
-    marginTop: 50,
-    marginBottom: 40
+    width: wp(90),
+    marginTop: hp(4),
   },
   boxInput: {
-    width: "100%",
-    marginBottom: 30
+    width: wp(90),
+    marginBottom: hp(4)
   },
   label: {
-    width: "100%",
+    width: wp(90),
     color: "#005A7D",
-    fontSize: 23,
+    fontSize: hp(3),
     marginLeft: 7,
     marginBottom: 10,
     textAlign: "justify"
   },
   input: {
-    width: "100%",
-    fontSize: 23,
-    height: 60,
+    width: wp(90),
+    fontSize: hp(2.5),
+    height: hp(10),
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -103,23 +102,25 @@ const styles = StyleSheet.create({
     borderRadius: 10, // Arredondar cantos da borda
   },
   boxButtton: {
-    flexDirection: "row",
-    marginVertical: 100
+    flexDirection: "column",
+    marginTop: hp(10)
   },
   button: {
-    width: "40%",
+    width: wp(90),
     backgroundColor: "#005A7D",
     paddingVertical: 15,
     paddingHorizontal: 15,
     marginHorizontal: "auto",
-    borderRadius: 10
+    borderRadius: 10,
+
   },
   buttonDelete: {
-    width: "40%",
+    width: wp(90),
     backgroundColor: "#E3E3E3",
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderRadius: 10,
+    marginTop: hp(2),
     marginHorizontal: "auto",
     borderWidth: 1, // Largura da borda
     borderColor: '#BFBFBF', // Cor da borda
@@ -127,20 +128,21 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: "#fff",
-    fontSize: 25,
+    fontSize: hp(3),
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
   },
   textButtonDelete: {
     color: "red",
-    fontSize: 25,
+    fontSize: hp(3),
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
   },
   icon: {
-    marginTop: 25,
-    marginLeft: 25
+    position: "absolute",
+    marginLeft: wp(5),
+    top: hp(4.5)
   }
 });

@@ -1,4 +1,10 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity } from "react-native";
+import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+
+import { Input } from "../../components/Form/Input"
+
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+const {height, width} = Dimensions.get("window")
 
 export function Login({ navigation }) {
   return (
@@ -12,23 +18,19 @@ export function Login({ navigation }) {
           <View style={styles.contentInput}>
             <View style={styles.boxInput}>
               <Text style={styles.label}>Email</Text>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {20}
-                  maxLength={40}
-                  //onChangeText={onChangeNumber}
-                  placeholder="email@gmail.com"
+              <Input
+                minValue= {30}
+                maxValue={50}
+                placeholder={"email@gmail.com"}
               />
             </View>
 
             <View style={styles.boxInput}>
               <Text style={styles.label}>Senha</Text>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {1}
-                  maxLength={6}
-                  //onChangeText={onChangeNumber}
-                  placeholder="********"
+              <Input
+                minValue= {4}
+                maxValue={8}
+                placeholder={"*******"}
               />
             </View>
           </View>
@@ -50,68 +52,57 @@ export function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    height: hp(100),
     minWidth: "100%",
+    justifyContent: "center",
+    paddingHorizontal: wp(5),
     marginHorizontal: "auto",
     marginVertical: "auto",
     backgroundColor: "#fff"
   },
   main: {
-    paddingHorizontal: 20
+    width: wp(90)
   },
   title: {
-    width: "100%",
+    width: wp(90),
     color: "#003B52",
-    fontSize: 45,
+    fontSize: hp(4),
     fontWeight: "bold",
     textAlign: "center"
   },
   contentInput: {
-    marginTop: 60,
-    marginBottom: 80
+    marginVertical: hp(8)
   },
   boxInput: {
-    width: "100%",
+    width: wp(90),
     marginBottom: 20
   },
   label: {
-    width: "100%",
+    width: wp(90),
     color: "#005A7D",
-    fontSize: 23,
+    fontSize: hp(3),
     marginLeft: 7,
     marginBottom: 10,
     textAlign: "justify"
   },
-  input: {
-    width: "100%",
-    fontSize: 23,
-    height: 60,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1, // Largura da borda
-    borderColor: '#BFBFBF', // Cor da borda
-    borderRadius: 10, // Arredondar cantos da borda
-  },
   contentButton: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    width: wp(90),
+    flexDirection: "column",
     alignItems: "center",
-    marginTop: 60,
+    marginTop: hp(7),
     marginHorizontal: "auto"
   },
   button: {
-    width: "40%",
+    width: wp(90),
     backgroundColor: "#005A7D",
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderRadius: 10,
+    marginBottom: 10,
     marginHorizontal: "auto"
   },
   buttonClean: {
-    width: "50%",
+    width: wp(90),
     backgroundColor: "#fff",
     paddingVertical: 15,
     paddingHorizontal: 15,
@@ -123,14 +114,14 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: "#fff",
-    fontSize: 25,
+    fontSize: hp(3),
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
   },
   textButtonClean: {
     color: "#005A7D",
-    fontSize: 25,
+    fontSize: hp(3),
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",

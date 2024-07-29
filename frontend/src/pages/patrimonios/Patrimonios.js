@@ -1,13 +1,17 @@
-import { StatusBar, SafeAreaView , StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { StatusBar, SafeAreaView , StyleSheet, Text, View, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { Card } from "../../components/cardPatrimonio"
 
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 import { AntDesign } from '@expo/vector-icons';
+
+const {height, width} = Dimensions.get("window")
 
 export function Patrimonios({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('menu') }>
             <AntDesign name="close" size={30} color="black" />
           </TouchableOpacity>
@@ -27,26 +31,28 @@ export function Patrimonios({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    height: hp(100),
     justifyContent: "center",
     minWidth: "100%",
-    minHeight: "100%",
+    paddingHorizontal: wp(5),
     marginHorizontal: "auto",
-    backgroundColor: "#FFF"
+    backgroundColor: "#fff"
   },
   title: {
-    width: "100%",
+    width: wp(90),
     textAlign: "center",
-    fontSize: 30,
+    fontSize: hp(3.5),
     fontWeight: "700",
     color: "#003B52",
-    marginTop: 30,
-    marginBottom: 50
+    marginTop: hp(12),
+    marginBottom: hp(7)
   },
   main: {
-    paddingHorizontal: 20
+    width: wp(100),
+    marginBottom: hp(4)
   },
   icon: {
-    marginTop: 60,
-    marginLeft: 20
+    position: "absolute",
+    top: hp(4.5)
   }
 });

@@ -1,6 +1,12 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity } from "react-native";
+import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+import { Input } from "../../components/Form/Input";
 
 import { AntDesign } from '@expo/vector-icons';
+
+const {height, width} = Dimensions.get("window")
 
 export function CadastroEmail({ navigation }) {
   return (
@@ -16,12 +22,10 @@ export function CadastroEmail({ navigation }) {
             </View>
 
             <View style={styles.contentInput}>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {10}
-                  maxLength={50}
-                  //onChangeText={onChangeNumber}
-                  placeholder="email@gmail.com"
+              <Input
+                minValue= {30}
+                maxValue={50}
+                placeholder={"email@gmail.com"}
               />
             </View>
 
@@ -36,65 +40,58 @@ export function CadastroEmail({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: hp(100),
     justifyContent: "center",
+    minWidth: "100%",
+    paddingHorizontal: wp(5),
     marginHorizontal: "auto",
+    marginVertical: "auto",
     backgroundColor: "#fff"
   },
   main: {
-    paddingHorizontal: 20
+    width: wp(90)
   },
   contentTitle: {
     alignItems: "flex-start",
-    marginTop: 30
+    marginTop: hp(5)
   },
   title: {
     color: "#003B52",
-    fontSize: 35,
+    fontSize: hp(4),
     fontWeight: "bold",
     textAlign: "justify"
   },
   subtitle: {
     color: "#005A7D",
-    fontSize: 24,
+    fontSize: hp(3),
     marginTop: 10,
     textAlign: "justify"
   },
   contentInput: {
-    width: "100%",
-    marginTop: 90,
-    marginBottom: 100
-  },
-  input: {
-    width: "100%",
-    fontSize: 23,
-    height: 60,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1, // Largura da borda
-    borderColor: '#BFBFBF', // Cor da borda
-    borderRadius: 10, // Arredondar cantos da borda
+    width: wp(90),
+    marginTop: hp(10),
+    marginBottom: hp(40)
   },
   button: {
-    color: "#000",
+    position: "absolute",
+    bottom: hp(0),
     backgroundColor: "#005A7D",
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderRadius: 10,
-    width: "60%",
-    marginTop: 150,
-    marginBottom: 60,
+    width: wp(90),
     marginHorizontal: "auto"
   },
   textButton: {
     color: "#fff",
-    fontSize: 25,
+    fontSize: hp(3),
     padding: 0,
     fontWeight: "bold",
     textAlign: "center",
   },
   icon: {
-    marginLeft: 20
+    position: "absolute",
+    marginLeft: wp(5),
+    top: hp(4.5)
   }
 });
