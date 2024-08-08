@@ -1,38 +1,46 @@
-import { PrismaClient } from '@prisma/client';
+const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { jwtSecret, jwtExpiresIn } = require('../config/config');
+
 const prisma = new PrismaClient();
 
-class UsuarioService{
-    async createUser (nome, email, senha) {
+class UsuarioService {
+    async createUser(nome, email, senha) {
+        const hashedPassword = await bcrypt.hash(senha, 10);
         const user = await prisma.usuario.create({
             data: {
                 nome,
                 email,
-                senha
-            }
+                senha: hashedPassword,
+            },
         });
-        return user;    
+        return user;
     }
 
     async atualizarUsuario(email, senha) {
-        let updateSenha = await prisma.usuario.update({
-        where:{
+        const hashedPassword = await bcrypt.hash(senha, 10);
+        const updateSenha = await prisma.usuario.update({
+            where: {
                 email,
-        },
-        data:{
-                senha,
-        }, 
+            },
+            data: {
+                senha: hashedPassword,
+            },
         });
         return updateSenha;
     }
 
-    async updateDadosUsuario(nome, email, senha){
-        let updateData = await prisma.usuario.update({
-            where:{
-                email
+    async updateDadosUsuario(id, { nome, email, senha }) {
+        const data = { nome, email };
+        if (senha) {
+            data.senha = await bcrypt.hash(senha, 10);
+        }
+        const updateData = await prisma.usuario.update({
+            where: {
+                id: Number(id),
             },
-            data:{
-                nome, senha
-            }
+            data,
         });
         return updateData;
     }
@@ -40,27 +48,37 @@ class UsuarioService{
     async deleteUser(email) {
         const del = await prisma.usuario.delete({
             where: {
-                email
+                email,
             },
         });
-    
         return del;
     }
 
     async buscaUsuarioPorEmail(email) {
-        let userFind = await prisma.usuario.findUnique({
-            where:{
-                email
-            }
+        const userFind = await prisma.usuario.findUnique({
+            where: {
+                email,
+            },
         });
         return userFind;
     }
 
-    async buscaUsuarioPorId(id){
-        let buscaIdUsuario = await prisma.usuario.findUnique({
-            where : {id : Number(id)}
+    async buscaUsuarioPorId(id) {
+        const buscaIdUsuario = await prisma.usuario.findUnique({
+            where: {
+                id: Number(id),
+            },
         });
         return buscaIdUsuario;
+    }
+
+    async validatePassword(inputPassword, storedPassword) {
+        return await bcrypt.compare(inputPassword, storedPassword);
+    }
+
+    async generateToken(user) {
+        const payload = { id: user.id, email: user.email };
+        return jwt.sign(payload, jwtSecret, { expiresIn: jwtExpiresIn });
     }
 }
 

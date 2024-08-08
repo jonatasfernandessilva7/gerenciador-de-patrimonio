@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-
+const middleware = require('./middleware/Middleware');
 const apiUsuario = require('./api/Usuario');
 
 import cors from 'cors';
@@ -14,6 +14,9 @@ app.use(cors({origin: 'http://localhost:8081'}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+
+app.use(middleware);
+
 app.use('/', apiUsuario);
 
 app.listen(process.env.PORT, () => {
