@@ -1,10 +1,17 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions, ScrollView } from "react-native";
-
-import { Input } from "../../components/Form/Input";
+import { 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  View, 
+  Dimensions
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
 const {height, width} = Dimensions.get("window")
+
+import { Input } from "../../components/Form/input/Input";
+import { InputNumeric } from "../../components/Form/input/InputNumeric";
+import { Button } from "../../components/Form/button/Button"
 
 export function Perfil() {
   return (
@@ -31,13 +38,15 @@ export function Perfil() {
                 minValue= {30}
                 maxValue={50}
                 placeholder={"email@gmail.com"}
+                keyboardtype={'email-address'}
+    
               />
             </View>
 
             <View style={styles.boxInput}>
               <Text style={styles.label}>Senha</Text>
-              <Input
-                minValue= {4}
+              <InputNumeric
+                minValue= {8}
                 maxValue={8}
                 placeholder={"*******"}
               />
@@ -46,9 +55,7 @@ export function Perfil() {
 
 
           <View style={styles.contentButton}>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.textButton}>Alterar dados</Text>
-            </TouchableOpacity>
+            <Button TextButton={'Alterar dados'}/>
           </View>
         </View>
     </View>
@@ -98,11 +105,9 @@ const styles = StyleSheet.create({
     marginHorizontal: "auto"
   },
   button: {
+    position: "absolute",
+    bottom: hp(0),
     width: wp(90),
-    backgroundColor: "#005A7D",
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 10,
     marginHorizontal: "auto"
   },
   textButton: {

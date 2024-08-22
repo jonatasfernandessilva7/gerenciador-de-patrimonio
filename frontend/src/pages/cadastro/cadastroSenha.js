@@ -1,10 +1,19 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+import { 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  Dimensions 
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("window")
+
+import { InputNumeric } from "../../components/Form/input/InputNumeric";
+import { Button } from "../../components/Form/button/Button"
 
 import { AntDesign } from '@expo/vector-icons';
-
-const {height, width} = Dimensions.get("window")
 
 export function CadastroSenha({ navigation }) {
   return (
@@ -21,7 +30,7 @@ export function CadastroSenha({ navigation }) {
           <View style={styles.boxInput}>
             <View style={styles.contentInput}>
             <Text style={styles.label}>Senha</Text>
-            <Input
+            <InputNumeric
                 minValue= {4}
                 maxValue={8}
                 placeholder={"*******"}
@@ -30,7 +39,7 @@ export function CadastroSenha({ navigation }) {
             
             <View style={styles.contentInput}>
               <Text style={styles.label}>Confirmar Senha</Text>
-              <Input
+              <InputNumeric
                 minValue= {4}
                 maxValue={8}
                 placeholder={"*******"}
@@ -38,9 +47,9 @@ export function CadastroSenha({ navigation }) {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('addPatrimonio') }>
-            <Text style={styles.textButton}>Avançar</Text>
-          </TouchableOpacity>
+          <View style={styles.button}>
+              <Button TextButton={'Avançar'} onpress={ () => navigation.navigate('addPatrimonio') }/>
+          </View>
         </View>
     </View>
   );
@@ -88,19 +97,8 @@ const styles = StyleSheet.create({
   button: {
     position: "absolute",
     bottom: hp(0),
-    backgroundColor: "#005A7D",
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 10,
     width: wp(90),
     marginHorizontal: "auto"
-  },
-  textButton: {
-    color: "#fff",
-    fontSize: hp(3),
-    padding: 0,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   icon: {
     position: "absolute",

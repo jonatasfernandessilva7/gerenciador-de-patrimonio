@@ -1,10 +1,17 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+import { 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  View, 
+  Dimensions 
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
-import { Input } from "../../components/Form/Input";
-
 const {height, width} = Dimensions.get("window")
+
+import { DropdownComponent } from '../../components/Form/SelectItem'
+import { InputNumeric } from "../../components/Form/input/InputNumeric";
+import { Button } from "../../components/Form/button/Button"
 
 export function AddPatrimonio({ navigation }) {
   return (
@@ -20,30 +27,22 @@ export function AddPatrimonio({ navigation }) {
 
           <View style={styles.contentInput}>
             <View style={styles.boxInput}>
-              <Text style={styles.label}>Tipo de Patrimônio</Text>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {20}
-                  maxLength={40}
-                  //onChangeText={onChangeNumber}
-                  placeholder="Casa"
-              />
+              <DropdownComponent />
             </View>
 
             <View style={styles.boxInput}>
               <Text style={styles.label}>Valor do Imóvel</Text>
-              <Input
-                minValue= {1}
+              <InputNumeric
+                minValue={1}
                 maxValue={10}
-                placeholder={"R$ 0,00"}
+                placeholder={'R$ 0,00'}
               />
             </View>
           </View>
 
-
-          <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('menu') }>
-            <Text style={styles.textButton}>Adicionar</Text>
-          </TouchableOpacity>
+          <View style={styles.button}>
+            <Button TextButton={'Adicionar'} onpress={ () => navigation.navigate('menuPrincipal') }/>
+          </View>
         </View>
     </View>
   );
@@ -88,33 +87,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "justify"
   },
-  input: {
-    width: wp(90),
-    fontSize: hp(2.5),
-    height: hp(10),
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1, // Largura da borda
-    borderColor: '#BFBFBF', // Cor da borda
-    borderRadius: 10, // Arredondar cantos da borda
-  },
   button: {
     position: "absolute",
     bottom: hp(0),
-    backgroundColor: "#005A7D",
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 10,
     width: wp(90),
     marginHorizontal: "auto"
-  },
-  textButton: {
-    color: "#fff",
-    fontSize: hp(3),
-    padding: 0,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   icon: {
     position: "absolute",

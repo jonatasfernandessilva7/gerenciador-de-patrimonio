@@ -1,16 +1,19 @@
+import { useState } from 'react';
+
 import { StyleSheet, View, TextInput, Dimensions } from "react-native"
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const {height, width} = Dimensions.get("window")
 
-export function Input({ minValue, maxValue, placeholder }){
+export function Input({ minValue, maxValue, placeholder, keyboardtype }){
     return(
         <View style={styles.container}>
             <TextInput 
                 style={styles.input}
                 minHeight= {minValue}
                 maxLength={maxValue}
+                keyboardType={keyboardtype}
                 placeholder={placeholder}
             />
         </View>

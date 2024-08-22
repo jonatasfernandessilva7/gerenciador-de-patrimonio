@@ -1,12 +1,19 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+import { 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  View, 
+  TouchableOpacity, 
+  Dimensions 
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("window")
 
-import { Input } from "../../components/Form/Input";
+import { Input } from "../../components/Form/input/Input";
+import { Button } from "../../components/Form/button/Button"
 
 import { AntDesign } from '@expo/vector-icons';
-
-const {height, width} = Dimensions.get("window")
 
 export function CadastroNome({ navigation }) {
   return (
@@ -30,9 +37,9 @@ export function CadastroNome({ navigation }) {
           </View>
 
 
-          <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('cadastroEmail') }>
-            <Text style={styles.textButton}>Avançar</Text>
-          </TouchableOpacity>
+          <View style={styles.button}>
+            <Button TextButton={'Avançar'} onpress={ () => navigation.navigate('cadastroEmail') }/>
+          </View>
         </View>
     </View>
   );
@@ -74,19 +81,8 @@ const styles = StyleSheet.create({
   button: {
     position: "absolute",
     bottom: hp(0),
-    backgroundColor: "#005A7D",
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 10,
     width: wp(90),
     marginHorizontal: "auto"
-  },
-  textButton: {
-    color: "#fff",
-    fontSize: hp(3),
-    padding: 0,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   icon: {
     position: "absolute",

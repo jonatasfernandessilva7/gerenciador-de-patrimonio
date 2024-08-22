@@ -1,12 +1,20 @@
-import { StatusBar, StyleSheet, Text, View, TextInput ,TouchableOpacity, Dimensions } from "react-native";
+import { 
+  StatusBar, 
+  StyleSheet, 
+  Text, 
+  View,
+  TouchableOpacity,
+  Dimensions 
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+const {height, width} = Dimensions.get("window")
 
-import { Input } from "../../components/Form/Input";
+import { DropdownComponent } from '../../components/Form/SelectItem'
+import { InputNumeric } from "../../components/Form/input/InputNumeric";
+import { Button } from "../../components/Form/button/Button"
 
 import { AntDesign } from '@expo/vector-icons';
-
-const {height, width} = Dimensions.get("window")
 
 export function EditPatrimonio({ navigation }) {
   return (
@@ -21,18 +29,12 @@ export function EditPatrimonio({ navigation }) {
           <View style={styles.contentInput}>
             <View style={styles.boxInput}>
               <Text style={styles.label}>Tipo de Patrimônio</Text>
-              <TextInput
-                  style={styles.input}
-                  minHeight= {20}
-                  maxLength={40}
-                  //onChangeText={onChangeNumber}
-                  placeholder="Casa"
-              />
+              <DropdownComponent />
             </View>
 
             <View style={styles.boxInput}>
               <Text style={styles.label}>Valor do Imóvel</Text>
-              <Input
+              <InputNumeric
                 minValue= {1}
                 maxValue={10}
                 placeholder={"R$ 0,00"}
@@ -42,10 +44,8 @@ export function EditPatrimonio({ navigation }) {
           </View>
 
           <View style={styles.boxButtton}>
-            <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('menu') }>
-              <Text style={styles.textButton}>Editar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonDelete} onPress={ () => navigation.navigate('menu') }>
+            <Button TextButton={'Editar dados'}/>
+            <TouchableOpacity style={styles.buttonDelete} onPress={ () => navigation.navigate('Patrimonios') }>
               <Text style={styles.textButtonDelete}>Excluir</Text>
             </TouchableOpacity>
           </View>
@@ -90,29 +90,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "justify"
   },
-  input: {
-    width: wp(90),
-    fontSize: hp(2.5),
-    height: hp(10),
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1, // Largura da borda
-    borderColor: '#BFBFBF', // Cor da borda
-    borderRadius: 10, // Arredondar cantos da borda
-  },
   boxButtton: {
     flexDirection: "column",
     marginTop: hp(10)
-  },
-  button: {
-    width: wp(90),
-    backgroundColor: "#005A7D",
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    marginHorizontal: "auto",
-    borderRadius: 10,
-
   },
   buttonDelete: {
     width: wp(90),
@@ -120,25 +100,17 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderRadius: 10,
-    marginTop: hp(2),
     marginHorizontal: "auto",
     borderWidth: 1, // Largura da borda
     borderColor: '#BFBFBF', // Cor da borda
     borderRadius: 10, // Arredondar cantos da borda
-  },
-  textButton: {
-    color: "#fff",
-    fontSize: hp(3),
-    padding: 0,
-    fontWeight: "bold",
-    textAlign: "center",
   },
   textButtonDelete: {
     color: "red",
     fontSize: hp(3),
     padding: 0,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "center"
   },
   icon: {
     position: "absolute",

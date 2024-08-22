@@ -1,14 +1,29 @@
-import { StatusBar, SafeAreaView , StyleSheet, Text, View, Image, ScrollView, Dimensions } from "react-native";
+import { 
+  StatusBar, 
+  SafeAreaView, 
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions 
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
 const {height, width} = Dimensions.get("window")
 
-export function Sobre() {
+import { AntDesign } from '@expo/vector-icons';
+
+export function Sobre({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={"#005A7D"}/>
         <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableOpacity style={styles.icon} onPress={ () => navigation.navigate('menuPrincipal') }>
+            <AntDesign name="arrowleft" size={30} color={"#000"}/>
+          </TouchableOpacity>
+
           <View style={styles.main}>
             <Text style={styles.title}>Sobre</Text>
 
@@ -22,7 +37,9 @@ export function Sobre() {
 
                 <View style={styles.devs}>
                   <View style={styles.boxDev}>
-                    <View style={styles.img}></View>
+                    <View style={styles.img}>
+                      <Image style={styles.img} source={require('../../assets/img/img_desenvolvedor_jonatas.jpg')} alt="Imagem do Desenvolvedor BackEnd"/>
+                    </View>
                     <Text style={styles.nameDev}>Jônatas Fernandes Silva</Text>
                   </View>
         
@@ -32,7 +49,9 @@ export function Sobre() {
 
                 <View style={styles.devs}>
                   <View style={styles.boxDev}>
-                    <View style={styles.img}></View>
+                    <View style={styles.img}>
+                      <Image style={styles.img} source={require('../../assets/img/img_desenvolvedor_jonatas.jpg')} alt="Imagem do Desenvolvedor BackEnd"/>
+                    </View>
                     <Text style={styles.nameDev}>Gustavo Menezes</Text>
                   </View>
         
@@ -43,7 +62,7 @@ export function Sobre() {
                 <View style={styles.devs}>
                   <View style={styles.boxDev}>
                     <View style={styles.img}>
-                      <Image style={styles.img} source={require('../../assets/img/img_desenvolvedor_robert.jpg')} />
+                      <Image style={styles.img} source={require('../../assets/img/img_desenvolvedor_robert.jpg')} alt="Imagem do Desenvolvedor FrontEnd"/>
                     </View>
                     <Text style={styles.nameDev}>Robert Michael Ávila</Text>
                   </View>
@@ -69,8 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   main: {
-    width: wp(90),
-    marginBottom: hp(5)
+    width: wp(90)
   },
   title: {
     width: "100%",
@@ -78,7 +96,8 @@ const styles = StyleSheet.create({
     fontSize: hp(3.8),
     fontWeight: "700",
     color: "#003B52",
-    marginVertical: hp(5)
+    marginTop: hp(5),
+    marginBottom: hp(5)
   },
   subtitle: {
     width: "100%",
@@ -124,5 +143,8 @@ const styles = StyleSheet.create({
   textStrong: {
     fontWeight: "600",
     color: "#005A7D"
+  },
+  icon: {
+    top: hp(4.5)
   }
 });

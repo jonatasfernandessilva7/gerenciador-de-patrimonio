@@ -1,7 +1,14 @@
-import { StatusBar, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
+import { 
+  StatusBar, 
+  StyleSheet,
+  Text, 
+  View, 
+  Image, 
+  TouchableOpacity, 
+  Dimensions 
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
 const {height, width} = Dimensions.get("window")
 
 export function PageInitial({ navigation }) {

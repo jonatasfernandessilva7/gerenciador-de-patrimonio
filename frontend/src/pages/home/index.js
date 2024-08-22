@@ -1,24 +1,77 @@
-import { StatusBar, SafeAreaView , StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from "react-native";
+import { useState } from "react"
 
-import { Card } from "../../components/cardPatrimonio"
+import { 
+  StatusBar, 
+  SafeAreaView, 
+  StyleSheet, 
+  Text, 
+  View, 
+  Image,
+  TouchableOpacity, 
+  ScrollView, 
+  Animated, 
+  Dimensions
+} from "react-native";
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
-import { AntDesign } from '@expo/vector-icons';
-
 const {height, width} = Dimensions.get("window")
 
+//import { Card } from "../../components/cardPatrimonio"
+
+import { AntDesign } from '@expo/vector-icons';
+import Setting from '@expo/vector-icons/AntDesign';
+
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
 export function Home({ navigation }) {
+
+  const [largura, setLargura] = useState(new Animated.Value(0));
+  const [altura, setAltura] = useState(new Animated.Value(30));
+
+  Animated.sequence([
+    Animated.timing(
+      largura,
+      {
+        useNativeDriver: false,
+        toValue: wp(100),
+        duration: 1000,
+        
+      }
+    ),
+    Animated.timing(
+      altura,
+      {
+        useNativeDriver: false,
+        toValue: hp(100),
+        duration: 1000
+      }
+    ),
+  ]).start()
+
   return (
     <SafeAreaView style={styles.container}>
+      <Animated.View style={{ width: largura, height: altura}}>
       <StatusBar backgroundColor={"#005A7D"}/>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Text style={styles.person}>Robert Michael</Text>
-            <Text style={styles.valueTotal}>R$ 520,000</Text>
+            <View style={styles.figure}>
+              <Image style={styles.imagem} source={require('../../assets/img/icon_secundario.png')}/>
+              
+              <TouchableOpacity style={styles.setting}>
+                <Setting name="setting" size={hp(4.3)} color="#FFF" />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={styles.subtitle}>Seja bem vindo(a)</Text>
+            <Text style={styles.person}>Francisco Gabriel</Text>
           </View>
 
           <View style={styles.main}>
+            <View style={styles.contentValue}>
+              <Text style={styles.subtitlevalueTotal}>Valor Total</Text>
+              <Text style={styles.valueTotal}>R$ 520.000,00</Text>
+            </View>
+
             <View style={styles.boxButton}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 <View style={styles.contentButton}>
@@ -30,7 +83,7 @@ export function Home({ navigation }) {
 
                 <View style={styles.contentButton}>
                   <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Patrimonios') }>
-                    <AntDesign name="areachart" size={24} color="#FFF" />
+                    <FontAwesome name="dollar" size={24} color="#FFF" paddingHorizontal={5}/>
                   </TouchableOpacity>
                     <Text style={styles.labelButton}>Patrimônios</Text>
                 </View>
@@ -43,10 +96,17 @@ export function Home({ navigation }) {
                 </View>
 
                 <View style={styles.contentButton}>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('sobre') }>
                     <AntDesign name="profile" size={24} color="#FFF" />
                   </TouchableOpacity>
                     <Text style={styles.labelButton}>Sobre</Text>
+                </View>
+
+                <View style={styles.contentButton}>
+                  <TouchableOpacity style={styles.button} onPress={ () => navigation.navigate('Ajuda') }>
+                    <FontAwesome name="question" size={24} color="#FFF" style={{paddingHorizontal: wp(1.2)}}/>
+                  </TouchableOpacity>
+                    <Text style={styles.labelButton}>Ajuda</Text>
                 </View>
               </ScrollView>
             </View>
@@ -54,14 +114,17 @@ export function Home({ navigation }) {
             <View style={styles.listPatrimonios}>
               <Text style={styles.title}>Últimos lançamentos</Text>
 
-              <View style={styles.list}>
+              {/* <View style={styles.list}>
                 <Card nomePatrimonio={"Casa Própria"} valor={"40.000"} route={ () => navigation.navigate("editPatrimonio")}/>
                 <Card nomePatrimonio={"Apartamento"} valor={"130.000"} />
                 <Card nomePatrimonio={"Automóvel"} valor={"60.000"} />
-              </View>
+              </View> */}
+
+              <Text style={styles.vazio}>Nenhum item adicionado</Text>
             </View>
           </View>
       </ScrollView>
+      </Animated.View>
     </SafeAreaView>
   );
 }
@@ -77,55 +140,91 @@ const styles = StyleSheet.create({
     backgroundColor: "#F3F3F3"
   },
   header: {
+    flexDirection: "column",
+    width: wp(100),
+    justifyContent: "space-between",
+    backgroundColor: "#005A7D",
+    paddingTop: hp(1),
+    paddingBottom: hp(2)
+  },
+  figure: {
     flexDirection: "row",
     width: wp(100),
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#005A7D",
-    paddingTop: hp(15),
-    paddingBottom: hp(2),
-    paddingHorizontal: wp(4)
+    marginBottom: hp(2),
+    marginLeft: hp(0.3)
   },
-  person: {
-    color: "#FFF",
-    fontSize: hp(2.8),
-    fontWeight: "bold",
+  setting: {
+    alignItems: "flex-end",
+    marginRight: hp(3.3)
   },
-  valueTotal: {
-    color: "#005A7D",
+  imagem: {
+    width: wp(17),
+    height: hp(12.5),
+    borderRadius: 99,
+    alignItems: "flex-start"
+  },
+  subtitle: {
+    color: "#dcdcdc",
     fontSize: hp(2.3),
     fontWeight: "500",
-    backgroundColor: "#fff",
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1),
-    borderRadius: 15
+    marginBottom: hp(2),
+    paddingLeft: hp(2)
+  },
+  person: {
+    color: "#FFFFFF",
+    fontSize: hp(3),
+    fontWeight: "bold",
+    marginBottom: hp(1),
+    paddingLeft: hp(2)
   },
   main: {
     width: wp(100),
     marginBottom: hp(8)
+  },
+  contentValue: {
+    paddingLeft: wp(4),
+    paddingVertical: hp(3),
+    borderBottomWidth: 1,
+    borderBottomColor: "#d3d3d3"
+  },
+  subtitlevalueTotal: {
+    color: "#606060",
+    fontSize: hp(2.2),
+    fontWeight: "500",
+    marginBottom: hp(2.5)
+  },
+  valueTotal: {
+    color: "#005A7D",
+    fontSize: hp(2.5),
+    fontWeight: "700",
+    marginLeft: wp(3),
+    marginBottom: hp(1)
   },
   boxButton: {
     flexDirection: "row",
     width: wp(100),
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginVertical: hp(7)
+    marginTop: hp(7),
+    marginBottom: hp(8)
   },
   contentButton: {
     alignItems: "center",
-    marginHorizontal: wp(3.1)
+    marginHorizontal: wp(4)
   },
   labelButton: {
-    color: "#333",
+    color: "#606060",
     fontSize: hp(2),
     fontWeight: "500",
-    marginTop: hp(1)
+    marginTop: hp(1.3)
   },
   button: {
     paddingHorizontal: wp(6),
     paddingVertical: hp(3),
     backgroundColor: "#005A7D",
-    borderRadius: 50,
+    borderRadius: 100,
     boxButton: 2,
     borderWidth: 1,
     borderColor: "#005A7D"
@@ -138,6 +237,13 @@ const styles = StyleSheet.create({
     fontSize: hp(3),
     marginLeft: wp(4),
     fontWeight: "700"
+  },
+  vazio: {
+    color: "#606060",
+    fontSize: hp(2.6),
+    fontWeight: "500",
+    marginHorizontal: "auto",
+    marginVertical: hp(9)
   },
   list: {
     marginHorizontal: "auto",
