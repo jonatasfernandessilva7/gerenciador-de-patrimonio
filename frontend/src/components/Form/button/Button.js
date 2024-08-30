@@ -38,5 +38,12 @@ const styles = StyleSheet.create({
         padding: 0,
         fontWeight: "bold",
         textAlign: "center",
+    },
+    textButton2: {
+        color: "#FFF",
+        fontSize: hp(3),
+        padding: 0,
+        fontWeight: "bold",
+        textAlign: "center",
     }
 })
