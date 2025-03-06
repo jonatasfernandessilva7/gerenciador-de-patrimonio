@@ -3,7 +3,8 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const middleware = require('./middleware/Middleware');
-const apiUsuario = require('./api/Usuario');
+const apiUsuario = require('./api/UsuarioAPI');
+const apiPatrimonio = require('./api/PatrimonioAPI');
 
 import cors from 'cors';
 import morgan from 'morgan';
@@ -15,9 +16,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 
-app.use(middleware);
+/*app.use(middleware);*/
 
 app.use('/', apiUsuario);
+app.use('/inicio', apiPatrimonio);
 
 app.listen(process.env.PORT, () => {
     console.log('rodando na porta: ',process.env.PORT);
