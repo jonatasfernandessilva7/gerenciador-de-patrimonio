@@ -114,6 +114,12 @@ class PatrimonioService {
         return await prisma.bens.findMany({
             where: {
                 patrimonioId: Number(patrimonioId) // Conversão explícita
+            },include:{
+                imoveis: true,
+                terrenos: true,
+                veiculos: true,
+                participacoes: true,
+                outrosinvestimentos: true
             }
         });
     }
@@ -123,6 +129,9 @@ class PatrimonioService {
         return await prisma.direitos.findMany({
             where: {
                 patrimonioId: Number(patrimonioId) // Conversão explícita
+            },include:{
+                valor: true,
+                anoDeEntrada: true
             }
         });
     }
@@ -132,9 +141,37 @@ class PatrimonioService {
         return await prisma.obrigacoes.findMany({
             where: {
                 patrimonioId: Number(patrimonioId) // Conversão explícita
+            },include:{
+                valor: true,
+                anoDeEntrada: true
             }
         });
     }
+
+    // Buscar todos os dados de bens, direitos e obrigações de um patrimônio
+    async buscarTodosOsDadosPorPatrimonio(patrimonioId) {
+        const patrimonio = await prisma.patrimonio.findUnique({
+            where: {
+                id: Number(patrimonioId)
+            },
+            include: {
+                bens: {
+                    include: {
+                        imoveis: true,
+                        terrenos: true,
+                        veiculos: true,
+                        participacoes: true,
+                        outrosinvestimentos: true
+                    }
+                },
+                direitos: true,
+                obrigacoes: true
+            }
+        });
+
+        return patrimonio;
+    }
+
 }
 
 module.exports = PatrimonioService;

@@ -109,7 +109,7 @@ class PatrimonioController {
         try {
             const { patrimonioId } = req.params;
             const bens = await patrimonioService.buscarBensPorPatrimonio(patrimonioId);
-            res.json(bens);
+            if(bens != null) return res.json(bens);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -119,7 +119,7 @@ class PatrimonioController {
         try {
             const { patrimonioId } = req.params;
             const direitos = await patrimonioService.buscarDireitosPorPatrimonio(patrimonioId);
-            res.json(direitos);
+            if(direitos != null) return res.json(direitos);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
@@ -129,9 +129,19 @@ class PatrimonioController {
         try {
             const { patrimonioId } = req.params;
             const obrigacoes = await patrimonioService.buscarObrigacoesPorPatrimonio(patrimonioId);
-            res.json(obrigacoes);
+            if(obrigacoes!= null) return res.json(obrigacoes);
         } catch (error) {
             res.status(500).json({ error: error.message });
+        }
+    }
+
+    async buscarTodosOsPatrimonios(req,res){
+        try{
+            const { patrimonioId } = req.body; 
+            const patrimonio = await patrimonioService.buscarTodosOsDadosPorPatrimonio(patrimonioId);
+            if(patrimonio != null) return res.json(patrimonio)
+        }catch(error){
+            res.status(500).json({erro:error});
         }
     }
 }

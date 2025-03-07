@@ -20,5 +20,6 @@ routerPatrimonio.delete("/deletar-obrigacao/:id", (req, res) => patrimonioContro
 routerPatrimonio.get("/buscar-bens/:patrimonioId", (req, res) => patrimonioController.buscarBensPorPatrimonio(req, res));
 routerPatrimonio.get("/buscar-direitos/:patrimonioId", (req, res) => patrimonioController.buscarDireitosPorPatrimonio(req, res));
 routerPatrimonio.get("/buscar-obrigacoes/:patrimonioId", (req, res) => patrimonioController.buscarObrigacoesPorPatrimonio(req, res));
+routerPatrimonio.get("/ver-todos-os-patrimonios", (req,res) => patrimonioController.buscarTodosOsPatrimonios(req,res));
 
 module.exports = routerPatrimonio;
