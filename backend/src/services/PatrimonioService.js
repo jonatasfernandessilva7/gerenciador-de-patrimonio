@@ -169,8 +169,39 @@ class PatrimonioService {
             }
         });
 
+        
+
         return patrimonio;
     }
+
+
+    async buscarPatrimoniosPorUsuario(usuarioId) {
+        const usuario = await prisma.usuario.findUnique({
+            where: {
+                id: Number(usuarioId)
+            },
+            include: {
+                patrimonio: { // Refere-se ao campo 'patrimonio' no modelo Usuario
+                    include: {
+                        bens: {
+                            include: {
+                                imoveis: true,
+                                terrenos: true,
+                                veiculos: true,
+                                participacoes: true,
+                                outrosinvestimentos: true
+                            }
+                        },
+                        direitos: true,
+                        obrigacoes: true
+                    }
+                }
+            }
+        });
+    
+        return usuario; // Retorna o usuário com os patrimônios incluídos
+    }
+    
 
 }
 

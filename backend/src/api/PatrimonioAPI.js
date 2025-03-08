@@ -21,5 +21,7 @@ routerPatrimonio.get("/buscar-bens/:patrimonioId", (req, res) => patrimonioContr
 routerPatrimonio.get("/buscar-direitos/:patrimonioId", (req, res) => patrimonioController.buscarDireitosPorPatrimonio(req, res));
 routerPatrimonio.get("/buscar-obrigacoes/:patrimonioId", (req, res) => patrimonioController.buscarObrigacoesPorPatrimonio(req, res));
 routerPatrimonio.get("/ver-todos-os-patrimonios", (req,res) => patrimonioController.buscarTodosOsPatrimonios(req,res));
+routerPatrimonio.get("/patrimonios/:usuarioId", (req, res) => patrimonioController.buscarPatrimoniosPorUsuario(req,res));
+
 
 module.exports = routerPatrimonio;

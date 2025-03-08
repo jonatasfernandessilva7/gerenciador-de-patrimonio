@@ -144,6 +144,23 @@ class PatrimonioController {
             res.status(500).json({erro:error});
         }
     }
+
+    async buscarPatrimoniosPorUsuario(req, res) {
+        try {
+            const { usuarioId } = req.params; // Obtém o ID do usuário da URL
+            const usuario = await patrimonioService.buscarPatrimoniosPorUsuario(usuarioId);
+            
+            if (usuario && usuario.patrimonio) {
+                return res.json(usuario.patrimonio); // Retorna apenas o patrimônio associado ao usuário
+            } else {
+                return res.status(404).json({ error: "Usuário ou patrimônio não encontrado" });
+            }
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    
+    
 }
 
 module.exports = PatrimonioController;
