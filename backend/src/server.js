@@ -1,0 +1,26 @@
+const express = require('express');
+const app = express();
+const path = require('path');
+const bodyParser = require('body-parser');
+const middleware = require('./middleware/Middleware');
+const apiUsuario = require('./api/UsuarioAPI');
+const apiPatrimonio = require('./api/PatrimonioAPI');
+
+import cors from 'cors';
+import morgan from 'morgan';
+
+require("dotenv").config();
+
+app.use(cors({origin: 'http://localhost:8081'}));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(morgan('tiny'));
+
+/*app.use(middleware);*/
+
+app.use('/', apiUsuario);
+app.use('/', apiPatrimonio);
+
+app.listen(process.env.PORT, () => {
+    console.log('rodando na porta: ',process.env.PORT);
+});
