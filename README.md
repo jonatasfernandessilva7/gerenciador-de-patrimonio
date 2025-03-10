@@ -75,10 +75,22 @@ Prof. Orientador - Anderson Uchôa.
 | POST | /criar |
 | POST | /auth/login |
 | POST | /esqueceuASenha|
+| POST | /adicionar-patrimonio|
+| POST | /adicionar-bem|
+| POST | /adicionar-direito|
+| POST | /adicionar-obrigacao|
 | PUT | /atualizar-senha|
 | PUT | /atualizar/:id|
+| PUT | /atualizar-bem/:id|
+| PUT | /atualizar-direito/:id|
+| PUT | /atualizar-obrigacao/:id|
 | GET | /perfil/:id|
+| GET | /ver-todos-os-patrimonios|
+| GET | /patrimonios/:userId|
 | DELETE | /deletar|
+| DELETE | /deletar-bem/:id|
+| DELETE | /deletar-direito/:id|
+| DELETE | /deletar-obrigacao/:id|
 
 ## Documentação
 * [Documento de visão do projeto](https://docs.google.com/document/d/1ecPbt2rhca9vvIZzKyTWGP36-gXFlgF-3wmrct--Rwk/edit?usp=sharing)
