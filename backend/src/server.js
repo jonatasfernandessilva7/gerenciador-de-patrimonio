@@ -19,7 +19,7 @@ app.use(morgan('tiny'));
 /*app.use(middleware);*/
 
 app.use('/', apiUsuario);
-app.use('/inicio', apiPatrimonio);
+app.use('/', apiPatrimonio);
 
 app.listen(process.env.PORT, () => {
     console.log('rodando na porta: ',process.env.PORT);

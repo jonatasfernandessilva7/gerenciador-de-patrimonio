@@ -178,10 +178,10 @@ class PatrimonioService {
     async buscarPatrimoniosPorUsuario(usuarioId) {
         const usuario = await prisma.usuario.findUnique({
             where: {
-                id: Number(usuarioId)
+                id: Number(usuarioId)  // Buscar pelo ID do usuário logado
             },
             include: {
-                patrimonio: { // Refere-se ao campo 'patrimonio' no modelo Usuario
+                patrimonio: { 
                     include: {
                         bens: {
                             include: {
@@ -200,9 +200,7 @@ class PatrimonioService {
         });
     
         return usuario; // Retorna o usuário com os patrimônios incluídos
-    }
-    
-
+    }    
 }
 
 module.exports = PatrimonioService;

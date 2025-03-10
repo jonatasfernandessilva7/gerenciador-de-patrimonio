@@ -1,5 +1,6 @@
 const PatrimonioService = require('../services/PatrimonioService');
 const patrimonioService = new PatrimonioService();
+const jwt = require('jsonwebtoken');
 
 class PatrimonioController {
     async adicionarPatrimonio(req, res) {
@@ -147,20 +148,29 @@ class PatrimonioController {
 
     async buscarPatrimoniosPorUsuario(req, res) {
         try {
-            const { usuarioId } = req.params; // Obtém o ID do usuário da URL
-            const usuario = await patrimonioService.buscarPatrimoniosPorUsuario(usuarioId);
-            
-            if (usuario && usuario.patrimonio) {
-                return res.json(usuario.patrimonio); // Retorna apenas o patrimônio associado ao usuário
-            } else {
-                return res.status(404).json({ error: "Usuário ou patrimônio não encontrado" });
+            const id = parseInt(req.params.id, 10); // Converte o ID para número
+    
+            if (isNaN(id)) {
+                return res.status(400).json({ message: "ID inválido" });
             }
+    
+            const patrimonios = await patrimonioService.buscarPorUsuarioId(id);
+    
+            if (!patrimonios || patrimonios.length === 0) {
+                return res.status(404).json({ message: "Nenhum patrimônio encontrado para este usuário" });
+            }
+    
+            return res.status(200).json({
+                message: "Patrimônios encontrados",
+                patrimonios: patrimonios
+            });
+    
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            console.error("Erro ao buscar patrimônios:", error);
+            return res.status(500).json({ message: "Erro interno no servidor", erro: error.message });
         }
-    }
-    
-    
+    }    
+       
 }
 
 module.exports = PatrimonioController;

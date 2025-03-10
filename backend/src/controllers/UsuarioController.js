@@ -1,6 +1,7 @@
 const UsuarioService = require("../services/UserServices");
 const Validacao = require("../validations/UsuarioValidations");
 const authenticateToken = require('../middleware/Middleware');
+const jwt = require("jsonwebtoken");
 
 const validation = new Validacao();
 const userService = new UsuarioService();
@@ -26,7 +27,8 @@ class UsuarioController {
                     res.json({
                         user: user,
                         token: token,
-                        message: 'Usuário criado com sucesso'
+                        message: 'Usuário criado com sucesso',
+                        success: true
                     });
                 } catch (error) {
                     res.json({ error });
@@ -47,7 +49,8 @@ class UsuarioController {
                 res.json({
                     message: "Login bem-sucedido",
                     token: token,
-                    user: { email },
+                    id: user.id, // Adicionando o ID do usuário na resposta
+                    user: { email }
                 });
             } else {
                 res.status(400).json({ message: 'Login incorreto' });
@@ -56,7 +59,7 @@ class UsuarioController {
             console.error("Erro ao processar login:", error);
             res.status(500).json({ error: "Erro ao processar login, por favor tente novamente mais tarde" });
         }
-    }
+    }    
 
     async atualizarSenha(req, res) {
         try {
@@ -105,21 +108,29 @@ class UsuarioController {
 
     async perfil(req, res) {
         try {
-            const { id } = req.params;
-            const Usuario = await userService.buscaUsuarioPorId(id);
-
-            if (!Usuario) {
-                return res.status(400).json({ message: "Usuário não encontrado" });
+            const id = parseInt(req.params.id, 10); // Converte o ID para número
+    
+            if (isNaN(id)) {
+                return res.status(400).json({ message: "ID inválido" });
             }
+    
+            const usuario = await userService.buscaUsuarioPorId(id);
+    
+            if (!usuario) {
+                return res.status(404).json({ message: "Usuário não encontrado" });
+            }
+    
             return res.status(200).json({
                 message: "Usuário encontrado",
-                usuario: Usuario
+                usuario: usuario
             });
-
+    
         } catch (error) {
-            res.json({ erro: error });
+            console.error("Erro ao buscar perfil:", error);
+            return res.status(500).json({ message: "Erro interno no servidor", erro: error.message });
         }
     }
+    
 
     async deletarConta(req, res) {
         const { email } = req.body;

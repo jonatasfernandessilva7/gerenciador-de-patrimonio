@@ -6,7 +6,7 @@ const authenticateToken = require('../middleware/Middleware');
 const usuarioController = new UsuarioController();
 
 routerUsuario.post('/criar', (req, res) => usuarioController.criar(req, res));
-routerUsuario.post('/login', (req, res) => usuarioController.login(req, res));
+routerUsuario.post('/auth/login', (req, res) => usuarioController.login(req, res));
 routerUsuario.put('/atualizar-senha', (req, res) => usuarioController.atualizarSenha(req, res));
 routerUsuario.put('/atualizar/:id', (req, res) => usuarioController.atualizarDadosDoUsuario(req, res));
 routerUsuario.get('/perfil/:id', (req, res) => usuarioController.perfil(req, res));
