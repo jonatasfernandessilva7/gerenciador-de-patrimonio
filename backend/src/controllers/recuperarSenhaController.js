@@ -19,7 +19,7 @@ const recuperandoSenha = async (req, res) => {
 
         await sendEmail.mailerEnviaEmail(email);
 
-        res.status(200).json({ message: 'Email de recuperação enviado', data: searchUser });
+        res.status(200).json({ message: 'Email de recuperação enviado', data: searchUser});
     } catch (error) {
         console.error('Erro ao recuperar senha:', error);
         res.status(500).json({ message: 'Erro interno do servidor', error: error.message });

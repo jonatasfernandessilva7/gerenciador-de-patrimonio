@@ -1,5 +1,5 @@
 class EnvioEmail{
-    async mailerEnviaEmail(email, duvida, usuario) {
+    async mailerEnviaEmail(email) {
         "use strict";
         const nodemailer = require("nodemailer");
         async function main() {
@@ -10,8 +10,8 @@ class EnvioEmail{
                 logger: true,
                 secureconnection: false,
                 auth: {
-                    user: process.env.EMAIL_USER,
-                    pass: process.env.SENHA_EMAIL_USER
+                    user: "jonatasfernandes@alu.ufc.br",
+                    pass: "xv1fg5@*57"
                 },
                 tls: {
                     rejectUnAuthorized: true
@@ -19,10 +19,10 @@ class EnvioEmail{
             });
             let info = await transporter.sendMail({
                 from: email,
-                to: process.env.EMAIL_ENVIAR,
+                to: "jonatasfernandes@alu.ufc.br",
                 subject: "IMPORTANTE",
-                text: "duvida",
-                html: duvida + '<br><br><strong>enviado por </strong>' + usuario
+                text: "Recuperar senha",
+                html:'<br><br><strong>enviado por </strong>' + email
             });
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));

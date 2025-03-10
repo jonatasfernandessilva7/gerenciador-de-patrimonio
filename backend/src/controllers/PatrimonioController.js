@@ -1,5 +1,7 @@
 const PatrimonioService = require('../services/PatrimonioService');
+const UsuarioService = require('../services/UserServices');
 const patrimonioService = new PatrimonioService();
+const usuarioService = new UsuarioService();
 const jwt = require('jsonwebtoken');
 
 class PatrimonioController {
@@ -106,36 +108,6 @@ class PatrimonioController {
         }
     }
 
-    async buscarBensPorPatrimonio(req, res) {
-        try {
-            const { patrimonioId } = req.params;
-            const bens = await patrimonioService.buscarBensPorPatrimonio(patrimonioId);
-            if(bens != null) return res.json(bens);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
-    async buscarDireitosPorPatrimonio(req, res) {
-        try {
-            const { patrimonioId } = req.params;
-            const direitos = await patrimonioService.buscarDireitosPorPatrimonio(patrimonioId);
-            if(direitos != null) return res.json(direitos);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
-    async buscarObrigacoesPorPatrimonio(req, res) {
-        try {
-            const { patrimonioId } = req.params;
-            const obrigacoes = await patrimonioService.buscarObrigacoesPorPatrimonio(patrimonioId);
-            if(obrigacoes!= null) return res.json(obrigacoes);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
     async buscarTodosOsPatrimonios(req,res){
         try{
             const { patrimonioId } = req.body; 
@@ -148,28 +120,31 @@ class PatrimonioController {
 
     async buscarPatrimoniosPorUsuario(req, res) {
         try {
-            const id = parseInt(req.params.id, 10); // Converte o ID para número
+            const { userId } = req.params; // Obtém o id do usuário
     
-            if (isNaN(id)) {
-                return res.status(400).json({ message: "ID inválido" });
+            // Supondo que o serviço de busca já tenha a lógica para buscar patrimônios do usuário
+            const usuario = await patrimonioService.buscarPatrimoniosPorUsuarioId(userId);
+    
+            if (!usuario) {
+                return res.status(404).json({ message: "Usuário não encontrado" });
             }
     
-            const patrimonios = await patrimonioService.buscarPorUsuarioId(id);
-    
-            if (!patrimonios || patrimonios.length === 0) {
+            // Verifique se o usuário tem patrimônios associados
+            if (!usuario.patrimonio || usuario.patrimonio.length === 0) {
                 return res.status(404).json({ message: "Nenhum patrimônio encontrado para este usuário" });
             }
     
             return res.status(200).json({
                 message: "Patrimônios encontrados",
-                patrimonios: patrimonios
+                patrimonios: usuario.patrimonio // Presumindo que os patrimônios estão dentro do objeto 'usuario'
             });
     
         } catch (error) {
             console.error("Erro ao buscar patrimônios:", error);
             return res.status(500).json({ message: "Erro interno no servidor", erro: error.message });
         }
-    }    
+    }
+      
        
 }
 

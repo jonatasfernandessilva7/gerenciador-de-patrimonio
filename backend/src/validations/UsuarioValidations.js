@@ -4,7 +4,7 @@ const userService = new UsuarioService();
 
 class Validacao {
     async validarCadastro(email) {
-        if (!email.endsWith("@gmail.com") && !email.endsWith("@hotmail.com")) {
+        if (!email.endsWith("@alu.ufc.br") && !email.endsWith("@gmail.com")) {
             console.log(email);
             return "Por favor volte e insira um email válido";
         }

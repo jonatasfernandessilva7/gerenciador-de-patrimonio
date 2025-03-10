@@ -31,6 +31,7 @@ model Bens {
   veiculos            Veiculo[]
   participacoes       ParticipacoesSocietarias[]
   outrosinvestimentos OutrosInvestimentos[]
+  registros TabelaDeletarTodosOsBensDeUmaVezPorId[]
   patrimonioId        Int
   compoePatrimonio      Patrimonio                 @relation(fields: [patrimonioId], references: [id])
 }
@@ -102,4 +103,10 @@ model OutrosInvestimentos {
   anoDeCompra DateTime
   bemId       Int
   bem         Bens     @relation(fields: [bemId], references: [id])
+}
+
+model TabelaDeletarTodosOsBensDeUmaVezPorId {
+    id      String @id @default(uuid())
+    bemId Int 
+    bem   Bens @relation(fields: [bemId], references: [id], onDelete: Cascade)
 }
