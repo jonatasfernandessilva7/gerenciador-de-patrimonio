@@ -1,7 +1,5 @@
 # :checkered_flag: GERENCIADOR PATRIMONIAL
 
-Monitoramento e controle do fluxo de entrada e saída nos laboratórios.
-
 ## :technologist: Membros da equipe e Orientador
 
 Membro 538429 - Gustavo Menezes De Sousa - Análise e Desenvolvimento De Sistemas
