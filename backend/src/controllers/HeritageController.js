@@ -120,23 +120,21 @@ class PatrimonioController {
 
     async buscarPatrimoniosPorUsuario(req, res) {
         try {
-            const { userId } = req.params; // Obtém o id do usuário
-    
-            // Supondo que o serviço de busca já tenha a lógica para buscar patrimônios do usuário
+            const { userId } = req.params;
+
             const usuario = await patrimonioService.buscarPatrimoniosPorUsuarioId(userId);
     
             if (!usuario) {
                 return res.status(404).json({ message: "Usuário não encontrado" });
             }
-    
-            // Verifique se o usuário tem patrimônios associados
+
             if (!usuario.patrimonio || usuario.patrimonio.length === 0) {
                 return res.status(404).json({ message: "Nenhum patrimônio encontrado para este usuário" });
             }
     
             return res.status(200).json({
                 message: "Patrimônios encontrados",
-                patrimonios: usuario.patrimonio // Presumindo que os patrimônios estão dentro do objeto 'usuario'
+                patrimonios: usuario.patrimonio
             });
     
         } catch (error) {
