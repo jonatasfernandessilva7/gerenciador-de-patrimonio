@@ -1,30 +1,30 @@
-const UsuarioServico = require("../services/UserServices");
-const EnvioDeEmail = require("../services/EnvioDeEmail");
+const UsuarioServico = require("../services/UserService");
+const EnvioDeEmail = require("../services/SendEmailService");
 
 const sendEmail = new EnvioDeEmail();
-const usuario = new UsuarioServico();
+const user = new UsuarioServico();
 
-const enviandoDuvida = async (req, res) => {
+const SEND_FAQ = async (req, res) => {
     try {
         const { id } = req.params;
-        const { email, duvida, nome } = req.body;
+        const { email, FAQ, name } = req.body;
 
-        if (!email || !duvida || !nome) {
-            return res.status(400).json({ message: 'Campos obrigatórios não fornecidos' });
+        if (!email || !FAQ || !name) {
+            return res.status(400).json({ message: 'Required items not valid' });
         }
 
-        const searchUser = await usuario.buscaUsuarioPorId(id);
+        const searchUser = await user.searchUserById(id);
         if (!searchUser) {
-            return res.status(404).json({ message: 'Usuário não encontrado' });
+            return res.status(404).json({ message: 'User not found!' });
         }
 
-        await sendEmail.mailerEnviaEmail(email, duvida, nome);
+        await sendEmail.mailerSendEmail(email, FAQ, name);
 
-        res.status(200).json({ message: 'Sugestão enviada com sucesso', duvida, email, usuario: nome });
+        res.status(200).json({ message: 'success', FAQ, email, user: name });
     } catch (error) {
-        console.error('Erro ao enviar dúvida:', error);
-        res.status(500).json({ message: 'Erro interno do servidor', error: error.message });
+        console.error('Error in send FAQ:', error);
+        res.status(500).json({ message: 'Internal error in server', error: error.message });
     }
 }
 
-module.exports = enviandoDuvida;
+module.exports = SEND_FAQ;

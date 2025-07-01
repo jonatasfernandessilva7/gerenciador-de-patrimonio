@@ -1,17 +1,21 @@
-class EnvioEmail{
-    async mailerEnviaEmail(email) {
+import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+
+dotenv.config();
+
+class SendEmail{
+    async mailerSendEmail(email) {
         "use strict";
-        const nodemailer = require("nodemailer");
         async function main() {
             let transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 port: 587,
-                secure: false, // verdadeiro para portas 465, 587 = false
+                secure: false,
                 logger: true,
                 secureconnection: false,
                 auth: {
-                    user: "jonatasfernandes@alu.ufc.br",
-                    pass: "xv1fg5@*57"
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASSWORD
                 },
                 tls: {
                     rejectUnAuthorized: true
@@ -19,10 +23,10 @@ class EnvioEmail{
             });
             let info = await transporter.sendMail({
                 from: email,
-                to: "jonatasfernandes@alu.ufc.br",
+                to: process.env.EMAIL_ENVIAR,
                 subject: "IMPORTANTE",
                 text: "Recuperar senha",
-                html:'<br><br><strong>enviado por </strong>' + email
+                html:'<br><br><strong>send by </strong>' + email
             });
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
@@ -31,4 +35,4 @@ class EnvioEmail{
     }
 }
 
-module.exports = EnvioEmail;
+module.exports = SendEmail;

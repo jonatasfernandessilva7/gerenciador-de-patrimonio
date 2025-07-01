@@ -1,24 +1,24 @@
-const express = require('express');
-const routerPatrimonio = express.Router();
-const PatrimonioController = require('../controllers/PatrimonioController');
+import express from 'express';
+const heritageRouter = express.Router();
 
-const patrimonioController = new PatrimonioController();
+import HeritageController from '../controllers/HeritageController';
+const heritageController = new HeritageController();
 
-routerPatrimonio.post("/adicionar-patrimonio", patrimonioController.adicionarPatrimonio);
-routerPatrimonio.post("/adicionar-bem",  patrimonioController.adicionarBem);
-routerPatrimonio.post("/adicionar-direito",  patrimonioController.adicionarDireito);
-routerPatrimonio.post("/adicionar-obrigacao",  patrimonioController.adicionarObrigacao);
+heritageRouter.post("/add-heritage", heritageController.addHeritage);
+heritageRouter.post("/add-assets",  heritageController.addFinancialAssets);
+heritageRouter.post("/add-claims",  heritageController.addFinancialClaims);
+heritageRouter.post("/add-obligations",  heritageController.addFinancialObligations);
 
-routerPatrimonio.put("/atualizar-bem/:id", patrimonioController.atualizarBem);
-routerPatrimonio.put("/atualizar-direito/:id",  patrimonioController.atualizarDireito);
-routerPatrimonio.put("/atualizar-obrigacao/:id", patrimonioController.atualizarObrigacao);
+heritageRouter.put("/update-assets/:id", heritageController.updateFinancialAssets);
+heritageRouter.put("/update-claims/:id",  heritageController.updateFinancialClaims);
+heritageRouter.put("/update-obligations/:id", heritageController.updateFinancialObligations);
 
-routerPatrimonio.delete("/deletar-bem/:id", patrimonioController.deletarBem);
-routerPatrimonio.delete("/deletar-direito/:id", patrimonioController.deletarDireito);
-routerPatrimonio.delete("/deletar-obrigacao/:id",  patrimonioController.deletarObrigacao);
+heritageRouter.delete("/delete-assets/:id", heritageController.deleteFinancialAssets);
+heritageRouter.delete("/delete-claims/:id", heritageController.deleteFinancialClaims);
+heritageRouter.delete("/delete-obligations/:id",  heritageController.deleteFinancialObligations);
 
-routerPatrimonio.get("/ver-todos-os-patrimonios", patrimonioController.buscarTodosOsPatrimonios);
-routerPatrimonio.get("/patrimonios/:userId", patrimonioController.buscarPatrimoniosPorUsuario);
+heritageRouter.get("/view-all-heritages", heritageController.searchAllHeritage);
+heritageRouter.get("/view-heritage/:id", heritageController.searchHeritageById);
 
 
-module.exports = routerPatrimonio;
+module.exports = heritageRouter;

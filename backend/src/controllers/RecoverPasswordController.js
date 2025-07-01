@@ -1,29 +1,29 @@
-const UsuarioServico = require("../services/UserServices");
-const EnvioDeEmail = require("../services/EnvioDeEmail");
+import UserService from "../services/UserService";
+import SendEmailService from "../services/SendEmailService";
 
-const sendEmail = new EnvioDeEmail();
-const usuario = new UsuarioServico();
+const sendEmail = new SendEmailService();
+const user = new UserService();
 
-const recuperandoSenha = async (req, res) => {
+const RECOVER_PASSWORD = async (req, res) => {
     try {
         const { email } = req.body;
 
         if (!email) {
-            return res.status(400).json({ message: 'Email é obrigatório' });
+            return res.status(400).json({ message: 'required email' });
         }
 
-        const searchUser = await usuario.buscaUsuarioPorEmail(email);
+        const searchUser = await user.searchUserByEmail(email);
         if (!searchUser) {
-            return res.status(404).json({ message: 'Usuário não encontrado' });
+            return res.status(404).json({ message: 'user not found' });
         }
 
-        await sendEmail.mailerEnviaEmail(email);
+        await sendEmail.mailerSendEmail(email);
 
-        res.status(200).json({ message: 'Email de recuperação enviado', data: searchUser});
+        res.status(200).json({ message: 'sended email recover', data: searchUser});
     } catch (error) {
-        console.error('Erro ao recuperar senha:', error);
-        res.status(500).json({ message: 'Erro interno do servidor', error: error.message });
+        console.error('error in recover password:', error);
+        res.status(500).json({ message: 'internal server error', error: error.message });
     }
 }
 
-module.exports = recuperandoSenha;
+module.exports = RECOVER_PASSWORD;

@@ -1,149 +1,150 @@
-const PatrimonioService = require('../services/PatrimonioService');
-const UsuarioService = require('../services/UserServices');
-const patrimonioService = new PatrimonioService();
-const usuarioService = new UsuarioService();
-const jwt = require('jsonwebtoken');
+import HeritageService from '../services/HeritageService';
+import UserService from '../services/UserService';
+import jwt from 'jsonwebtoken';
 
-class PatrimonioController {
-    async adicionarPatrimonio(req, res) {
+const heritageService = new HeritageService();
+const userService = new UserService();
+
+class HeritageController {
+    async addHeritage(req, res) {
         try {
-            const { usuarioId } = req.body;
-            const novoPatrimonio = await patrimonioService.adicionarPatrimonio(usuarioId);
-            res.status(201).json(novoPatrimonio);
+            const { userId } = req.body;
+            const newHeritage = await heritageService.addHeritage(userId);
+            res.status(201).json({"message": "success", "data": newHeritage});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async adicionarBem(req, res) {
+    async addFinancialAssets(req, res) {
         try {
-            const { patrimonioId, dados } = req.body;
-            const bem = await patrimonioService.adicionarBem(patrimonioId, dados);
-            res.status(201).json(bem);
+            const { heritageId, data } = req.body;
+            const assets = await heritageService.addAssets(heritageId, data);
+            res.status(201).json({"message": "success", "data": assets});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async adicionarDireito(req, res) {
+    async addFinancialClaims(req, res) {
         try {
-            const { patrimonioId, dados } = req.body;
-            const direito = await patrimonioService.adicionarDireito(patrimonioId, dados);
-            res.status(201).json(direito);
+            const { heritageId, data } = req.body;
+            const claims = await heritageService.addClaims(heritageId, data);
+            res.status(201).json({"message": "success", "data": claims});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async adicionarObrigacao(req, res) {
+    async addFinancialObligations(req, res) {
         try {
-            const { patrimonioId, dados } = req.body;
-            const obrigacao = await patrimonioService.adicionarObrigacao(patrimonioId, dados);
-            res.status(201).json(obrigacao);
+            const { heritageId, data } = req.body;
+            const obligation = await heritageService.addObligations(heritageId, data);
+            res.status(201).json({"message": "success", "data": obligation});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async atualizarBem(req, res) {
-        try {
-            const { id } = req.params;
-            const dados = req.body;
-            const bemAtualizado = await patrimonioService.atualizarBem(parseInt(id), dados);
-            res.json(bemAtualizado);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
-
-    async atualizarDireito(req, res) {
+    async updateFinancialAssets(req, res) {
         try {
             const { id } = req.params;
-            const dados = req.body;
-            const direitoAtualizado = await patrimonioService.atualizarDireito(parseInt(id), dados);
-            res.json(direitoAtualizado);
+            const { data } = req.body;
+            const updateAssets = await heritageService.updateAssetsById(parseInt(id), data);
+            res.json({"message": "success", "data": updateAssets});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async atualizarObrigacao(req, res) {
+    async updateFinancialClaims(req, res) {
         try {
             const { id } = req.params;
-            const dados = req.body;
-            const obrigacaoAtualizada = await patrimonioService.atualizarObrigacao(parseInt(id), dados);
-            res.json(obrigacaoAtualizada);
+            const { data } = req.body;
+            const updateClaims = await heritageService.updateClaimsById(parseInt(id), data);
+            res.json({"message": "success", "data": updateClaims});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async deletarBem(req, res) {
+    async updateFinancialObligations(req, res) {
         try {
             const { id } = req.params;
-            await patrimonioService.deletarBem(parseInt(id));
-            res.json({ message: 'Bem deletado com sucesso!' });
+            const { data } = req.body;
+            const updateObligations = await heritageService.updateObligationsById(parseInt(id), data);
+            res.json({"message": "success", "data": updateObligations});
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async deletarDireito(req, res) {
+    async deleteFinancialAssets(req, res) {
         try {
             const { id } = req.params;
-            await patrimonioService.deletarDireito(parseInt(id));
-            res.json({ message: 'Direito deletado com sucesso!' });
+            await heritageService.deleteAssetById(parseInt(id));
+            res.json({ message: "success" });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async deletarObrigacao(req, res) {
+    async deleteFinancialClaims(req, res) {
         try {
             const { id } = req.params;
-            await patrimonioService.deletarObrigacao(parseInt(id));
-            res.json({ message: 'Obrigação deletada com sucesso!' });
+            await heritageService.deleteClaimsById(parseInt(id));
+            res.json({ message: "success" });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
     }
 
-    async buscarTodosOsPatrimonios(req,res){
+    async deleteFinancialObligations(req, res) {
+        try {
+            const { id } = req.params;
+            await heritageService.deleteObligationsById(parseInt(id));
+            res.json({ message: "success" });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async searchAllHeritage(req, res){
         try{
-            const { patrimonioId } = req.body; 
-            const patrimonio = await patrimonioService.buscarTodosOsDadosPorPatrimonio(patrimonioId);
-            if(patrimonio != null) return res.json(patrimonio)
+            const { heritageId } = req.body;
+            const heritage = await heritageService.searchAllDataForHeritage(heritageId);
+            if(heritage != null) return res.json({"message":"success" ,"data":heritage})
         }catch(error){
-            res.status(500).json({erro:error});
+            res.status(500).json({error:error});
         }
     }
 
-    async buscarPatrimoniosPorUsuario(req, res) {
+    async searchHeritageById(req, res) {
         try {
             const { userId } = req.params;
 
-            const usuario = await patrimonioService.buscarPatrimoniosPorUsuarioId(userId);
+            const user = await heritageService.searchHeritageForUserId(userId);
     
-            if (!usuario) {
-                return res.status(404).json({ message: "Usuário não encontrado" });
+            if (!user) {
+                return res.status(404).json({ message: "User not found!" });
             }
 
-            if (!usuario.patrimonio || usuario.patrimonio.length === 0) {
-                return res.status(404).json({ message: "Nenhum patrimônio encontrado para este usuário" });
+            if (!user.patrimonio || user.patrimonio.length === 0) {
+                return res.status(404).json({ message: "Nobody heritage found!" });
             }
     
             return res.status(200).json({
-                message: "Patrimônios encontrados",
-                patrimonios: usuario.patrimonio
+                message: "success",
+                patrimonios: user.patrimonio
             });
     
         } catch (error) {
-            console.error("Erro ao buscar patrimônios:", error);
-            return res.status(500).json({ message: "Erro interno no servidor", erro: error.message });
+            console.error("err in search for heritage:", error);
+            return res.status(500).json({ message: "internal erros in server", erro: error.message });
         }
     }
       
        
 }
 
-module.exports = PatrimonioController;
+module.exports = HeritageController;

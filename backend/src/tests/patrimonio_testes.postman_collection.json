@@ -1,0 +1,96 @@
+{
+  "info": {
+    "name": "Patrimônio API Testes",
+    "_postman_id": "abcd1234-5678-90ef-ghij-klmnopqrstuv",
+    "description": "Coleção de testes para a API de Patrimônio",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Criar Usuário",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/usuarios", "host": ["http://localhost:3000"], "path": ["usuarios"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"usuario@example.com\",\n  \"nome\": \"Usuário Teste\",\n  \"senha\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Criar Patrimônio",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/patrimonios", "host": ["http://localhost:3000"], "path": ["patrimonios"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuarioId\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "Adicionar Direito",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/direitos", "host": ["http://localhost:3000"], "path": ["direitos"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"valor\": 1500.0,\n  \"anoDeEntrada\": \"2024-01-01T00:00:00Z\",\n  \"patrimonioId\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "Adicionar Obrigação",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/obrigacoes", "host": ["http://localhost:3000"], "path": ["obrigacoes"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"valor\": 900.0,\n  \"anoDeEntrada\": \"2023-06-01T00:00:00Z\",\n  \"patrimonioId\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "Criar Bem (container)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/bens", "host": ["http://localhost:3000"], "path": ["bens"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"patrimonioId\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "Adicionar Imóvel",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/bens/imoveis", "host": ["http://localhost:3000"], "path": ["bens", "imoveis"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Apartamento Central\",\n  \"descricao\": \"2 quartos, 1 suíte\",\n  \"valor\": 250000.00,\n  \"anoDeCompra\": \"2020-03-01T00:00:00Z\",\n  \"depreciacao\": 5000.00,\n  \"bemId\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "Listar Usuários",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3000/usuarios", "host": ["http://localhost:3000"], "path": ["usuarios"] }
+      }
+    },
+    {
+      "name": "Listar Patrimônios",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3000/patrimonios", "host": ["http://localhost:3000"], "path": ["patrimonios"] }
+      }
+    }
+  ]
+}

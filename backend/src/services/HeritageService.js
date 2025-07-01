@@ -1,172 +1,158 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-class PatrimonioService {
-    async adicionarPatrimonio(usuarioId) {
-        return await prisma.patrimonio.create({
-            data: { usuarioId }
+class HeritageService {
+    async addHeritage(userId) {
+        return await prisma.heritage.create({
+            data: { userId }
         });
     }
 
-    async adicionarBem(patrimonioId, dados) {
-        return await prisma.bens.create({
+    async addAssets(heritageId, data) {
+        return await prisma.assets.create({
             data: {
-                patrimonioId,
-                imoveis: { create: dados.imoveis || [] },
-                terrenos: { create: dados.terrenos || [] },
-                veiculos: { create: dados.veiculos || [] },
-                participacoes: { create: dados.participacoes || [] },
-                outrosinvestimentos: { create: dados.outrosinvestimentos || [] }
+                heritageId,
+                real_estate: { create: data.real_estate || [] },
+                lands: { create: data.lands || [] },
+                vehicles: { create: data.vehicles || [] },
+                equity_interests: { create: data.equity_interests || [] },
+                other_investments: { create: data.other_investments || [] }
             },
             include: {
-                imoveis: true,
-                terrenos: true,
-                veiculos: true,
-                participacoes: true,
-                outrosinvestimentos: true
+                real_estate: true,
+                lands: true,
+                vehicles: true,
+                equity_interests: true,
+                other_investments: true
             }
         });
     }
 
-    async adicionarDireito(patrimonioId, dados) {
-        return await prisma.direitos.create({
-            data: { patrimonioId, valor: dados.valor, anoDeEntrada: dados.anoDeEntrada }
+    async addClaims(heritageId, data) {
+        return await prisma.claims.create({
+            data: { heritageId, value_of_claim: data.value_of_claim, year_of_entry: data.year_of_entry }
         });
     }
 
-    async adicionarObrigacao(patrimonioId, dados) {
-        return await prisma.obrigacoes.create({
-            data: { patrimonioId, valor: dados.valor, anoDeEntrada: dados.anoDeEntrada }
+    async addObligations(heritageId, data) {
+        return await prisma.obligations.create({
+            data: { heritageId, value_of_obligation: data.value_of_obligation, year_of_entry: data.year_of_entry }
         });
     }
 
-    async atualizarBem(id, dados) {
+    async updateAssetsById(id, data) {
         
-        const bemExiste = await prisma.bens.findUnique({
+        const existsAssets = await prisma.assets.findUnique({
             where: { id: Number(id) }
         });
         
-        if (!bemExiste) {
-            throw new Error("Bem não encontrado com o id fornecido.");
+        if (!existsAssets) {
+            throw new Error("Assets not found by Id.");
         }
 
 
-        return await prisma.bens.update({
+        return await prisma.assets.update({
             where: { id: Number(id) },
             data: {
-                imoveis: { update: dados.imoveis || [] },
-                terrenos: { update: dados.terrenos || [] },
-                veiculos: { update: dados.veiculos || [] },
-                participacoes: { update: dados.participacoes || [] },
-                outrosinvestimentos: { update: dados.outrosinvestimentos || [] }
+                real_estate: { create: data.real_estate || [] },
+                lands: { create: data.lands || [] },
+                vehicles: { create: data.vehicles || [] },
+                equity_interests: { create: data.equity_interests || [] },
+                other_investments: { create: data.other_investments || [] }
             },
             include: {
-                imoveis: true,
-                terrenos: true,
-                veiculos: true,
-                participacoes: true,
-                outrosinvestimentos: true
+                real_estate: true,
+                lands: true,
+                vehicles: true,
+                equity_interests: true,
+                other_investments: true
             }
         })
         
     }
 
-    async atualizarDireito(id, dados) {
-        // Verificar se o direito com o id informado existe
-        const direitoExistente = await prisma.direitos.findUnique({
+    async updateClaimsById(id, data) {
+        const existsClaim = await prisma.claims.findUnique({
             where: { id: Number(id) }
         });
     
-        if (!direitoExistente) {
-            throw new Error("Direito não encontrado com o id fornecido.");
+        if (!existsClaim) {
+            throw new Error("Claims not found by Id.");
         }
-    
-        // Caso o direito exista, proceder com a atualização
-        return await prisma.direitos.update({
+
+        return await prisma.claims.update({
             where: { id: Number(id) },
             data: {
-                valor: dados.valor,
-                anoDeEntrada: new Date(dados.anoDeEntrada)  // Garantir que a data esteja em formato Date
+                value_of_claim: data.value_of_claim,
+                year_of_entry: new Date(data.year_of_entry)
             }
         });
     }
     
 
-    async atualizarObrigacao(id, dados) {
-        // Verificar se o direito com o id informado existe
-        const obrigacaoExiste = await prisma.obrigacoes.findUnique({
+    async updateObligationsById(id, data) {
+
+        const existsObligations = await prisma.obligations.findUnique({
             where: { id: Number(id) }
         });
     
-        if (!obrigacaoExiste) {
-            throw new Error("Obrigação não encontrado com o id fornecido.");
+        if (!existsObligations) {
+            throw new Error("Obligations not found by Id.");
         }
-    
-        // Caso o direito exista, proceder com a atualização
-        return await prisma.obrigacoes.update({
+
+        return await prisma.obligations.update({
             where: { id: Number(id) },
             data: {
-                valor: dados.valor,
-                anoDeEntrada: new Date(dados.anoDeEntrada)  // Garantir que a data esteja em formato Date
+                value_of_obligation: data.value_of_obligation,
+                year_of_entry: new Date(data.year_of_entry)
             }
         });
     }
 
-    async deletarBem(id) {
-        await prisma.tabelaDeletarTodosOsBensDeUmaVezPorId.deleteMany({
-            where: { bemId: id }
-        });
-        
-        await prisma.bens.delete({
-            where: { id }
-        });
-        
+    async deleteClaimsById(id) {
+        return await prisma.claims.delete({ where: { id: Number(id) } });
     }
 
-    async deletarDireito(id) {
-        return await prisma.direitos.delete({ where: { id: Number(id) } });
+    async deleteObligationsById(id) {
+        return await prisma.obligations.delete({ where: { id: Number(id) } });
     }
 
-    async deletarObrigacao(id) {
-        return await prisma.obrigacoes.delete({ where: { id: Number(id) } });
-    }
-
-    async buscarTodosOsDadosPorPatrimonio(patrimonioId) {
-        return await prisma.patrimonio.findUnique({
-            where: { id: Number(patrimonioId) },
+    async searchAllDataForHeritage(heritageId) {
+        return await prisma.heritage.findUnique({
+            where: { id: Number(heritageId) },
             include: {
-                bens: {
+                assets: {
                     include: {
-                        imoveis: true,
-                        terrenos: true,
-                        veiculos: true,
-                        participacoes: true,
-                        outrosinvestimentos: true
+                        real_estate: true,
+                        lands: true,
+                        vehicles: true,
+                        equity_interests: true,
+                        other_investments: true
                     }
                 },
-                direitos: true,
-                obrigacoes: true
+                claims: true,
+                obligations: true
             }
         });
     }
 
-    async buscarPatrimoniosPorUsuarioId(usuarioId) {
-        return await prisma.usuario.findUnique({
-            where: { id: Number(usuarioId) },
+    async searchHeritageForUserId(userId) {
+        return await prisma.user.findUnique({
+            where: { id: Number(userId) },
             include: {
-                patrimonio: {
+                heritage: {
                     include: {
-                        bens: {
+                        assets: {
                             include: {
-                                imoveis: true,
-                                terrenos: true,
-                                veiculos: true,
-                                participacoes: true,
-                                outrosinvestimentos: true
+                                real_estate: true,
+                                lands: true,
+                                vehicles: true,
+                                equity_interests: true,
+                                other_investments: true
                             }
                         },
-                        direitos: true,
-                        obrigacoes: true
+                        claims: true,
+                        obligations: true
                     }
                 }
             }
@@ -174,4 +160,4 @@ class PatrimonioService {
     }
 }
 
-module.exports = PatrimonioService;
+module.exports = HeritageService;

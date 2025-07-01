@@ -1,17 +1,20 @@
 const express = require('express');
-const routerUsuario = express.Router();
-const UsuarioController = require('../controllers/UsuarioController');
-const recuperandoSenha = require ("../controllers/recuperarSenhaController");
+const userRouter = express.Router();
+import UserController from '../controllers/UserController';
+import recoverPassword from '../controllers/RecoverPasswordController';
 const authenticateToken = require('../middleware/Middleware');
 
-const usuarioController = new UsuarioController();
+const userController = new UserController();
 
-routerUsuario.post('/criar',usuarioController.criar);
-routerUsuario.post('/auth/login',usuarioController.login);
-routerUsuario.post('/esqueceuASenha', recuperandoSenha);
-routerUsuario.put('/atualizar-senha',  usuarioController.atualizarSenha);
-routerUsuario.put('/atualizar/:id',  usuarioController.atualizarDadosDoUsuario);
-routerUsuario.get('/perfil/:id',usuarioController.perfil);
-routerUsuario.delete('/deletar', usuarioController.deletarConta);
+userRouter.post('/created-user',userController.createdUser);
+userRouter.post('/auth/login-user',userController.loginUser);
+userRouter.post('/recover-password', recoverPassword);
 
-module.exports = routerUsuario;
+userRouter.put('/update-password',  userController.updatePassword);
+userRouter.put('/update-user/:id',  userController.updateUserData);
+
+userRouter.get('/profile-user/:id',userController.viewProfileData);
+
+userRouter.delete('/delele-user', userController.deleteUserAccount);
+
+module.exports = userRouter;

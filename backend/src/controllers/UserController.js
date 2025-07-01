@@ -1,33 +1,33 @@
-const UsuarioService = require("../services/UserServices");
-const Validacao = require("../validations/UsuarioValidations");
-const authenticateToken = require('../middleware/Middleware');
-const jwt = require("jsonwebtoken");
+import UserService from "../services/UserService";
+import Validations from "../validations/UserValidation";
+import authenticateToken from '../middleware/Middleware';
+import jwt from "jsonwebtoken";
 
-const validation = new Validacao();
-const userService = new UsuarioService();
+const validation = new Validations();
+const userService = new UserService();
 
-class UsuarioController {
-    async criar(req, res) {
+class UserController {
+    async createdUser(req, res) {
         try {
-            const { nome, email, senha } = req.body;
-            const validationMessage = await validation.validarCadastro(email);
+            const { name, email, password } = req.body;
+            const validationMessage = await validation.validateRegister(email);
     
-            if (validationMessage !== "Cadastro validado com sucesso") {
+            if (validationMessage !== "register success") {
                 res.json({ message: validationMessage });
                 return;
             }
 
-            let busca = await userService.buscaUsuarioPorEmail(email);
-            if (busca) {
-                res.json({ message: 'Já existe um usuário com esse email' });
+            let userExist = await userService.searchUserByEmail(email);
+            if (userExist) {
+                res.json({ message: 'These email already exists in the database.' });
             } else {
                 try {
-                    let user = await userService.createUser(nome, email, senha);
+                    let user = await userService.createUser(name, email, password);
                     const token = await userService.generateToken(user);
                     res.json({
                         user: user,
                         token: token,
-                        message: 'Usuário criado com sucesso',
+                        message: 'user created successfully',
                         success: true
                     });
                 } catch (error) {
@@ -39,40 +39,40 @@ class UsuarioController {
         }
     }
 
-    async login(req, res) {
+    async loginUser(req, res) {
         try {
-            const { email, senha } = req.body;
-            const user = await userService.buscaUsuarioPorEmail(email);
+            const { email, password } = req.body;
+            const user = await userService.searchUserByEmail(email);
     
-            if (user && await userService.validatePassword(senha, user.senha)) {
+            if (user && await userService.validatePassword(password, user.senha)) {
                 const token = await userService.generateToken(user);
                 res.json({
-                    message: "Login bem-sucedido",
+                    message: "Login successfully",
                     token: token,
-                    id: user.id, // Adicionando o ID do usuário na resposta
+                    id: user.id,
                     user: { email }
                 });
             } else {
-                res.status(400).json({ message: 'Login incorreto' });
+                res.status(400).json({ message: 'incorrect login' });
             }
         } catch (error) {
-            console.error("Erro ao processar login:", error);
-            res.status(500).json({ error: "Erro ao processar login, por favor tente novamente mais tarde" });
+            console.error("error in process login:", error);
+            res.status(500).json({ error: "error in process login" });
         }
     }    
 
-    async atualizarSenha(req, res) {
+    async updatePassword(req, res) {
         try {
-            const { email, senha } = req.body;
+            const { email, password } = req.body;
 
-            let busca = await userService.buscaUsuarioPorEmail(email);
+            let user = await userService.searchUserByEmail(email);
 
-            if (!busca) {
-                return res.status(400).send('Usuário não encontrado');
+            if (!user) {
+                return res.status(400).send('User not found');
             } else {
                 try {
-                    let updateSenha = await userService.atualizarUsuario(email, senha);
-                    res.json({ message: "Senha atualizada", user: updateSenha });
+                    let updatePassword = await userService.updateUserPassword(email, password);
+                    res.json({ message: "Updated password", user: updatePassword });
                 } catch (error) {
                     res.json({ error });
                 }
@@ -83,19 +83,19 @@ class UsuarioController {
         }
     }
 
-    async atualizarDadosDoUsuario(req, res) {
+    async updateUserData(req, res) {
         try {
             const { id } = req.params;
-            const { nome, email, senha } = req.body;
+            const { name, email, password } = req.body;
             
-            let userFind = await userService.buscaUsuarioPorId(id);
+            let user = await userService.searchUserById(id);
             
-            if (!userFind) {
-                res.send("Usuário não encontrado");
+            if (!user) {
+                res.send("User not found");
             } else {
                 try {
-                    let updateDeTudo = await userService.updateDadosUsuario(id, { nome, email, senha });
-                    res.json({ message: "Dados atualizados", user: updateDeTudo });
+                    let updateAllUserData = await userService.updateAllUserData(id, { name, email, password });
+                    res.json({ message: "Updated data", user: updateAllUserData });
                 } catch (erro) {
                     console.log(erro);
                 }
@@ -106,47 +106,47 @@ class UsuarioController {
         }
     }
 
-    async perfil(req, res) {
+    async viewProfileData(req, res) {
         try {
-            const id = parseInt(req.params.id, 10); // Converte o ID para número
+            const id = parseInt(req.params.id, 10);
     
             if (isNaN(id)) {
-                return res.status(400).json({ message: "ID inválido" });
+                return res.status(400).json({ message: "Invalid ID" });
             }
     
-            const usuario = await userService.buscaUsuarioPorId(id);
+            const user = await userService.searchUserById(id);
     
-            if (!usuario) {
-                return res.status(404).json({ message: "Usuário não encontrado" });
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
             }
     
             return res.status(200).json({
-                message: "Usuário encontrado",
-                usuario: usuario
+                message: "successfully view profile",
+                user: user
             });
     
         } catch (error) {
-            console.error("Erro ao buscar perfil:", error);
-            return res.status(500).json({ message: "Erro interno no servidor", erro: error.message });
+            console.error("Error in search profile:", error);
+            return res.status(500).json({ message: "Internal error in server", error: error.message });
         }
     }
     
 
-    async deletarConta(req, res) {
+    async deleteUserAccount(req, res) {
         const { email } = req.body;
 
-        let buscaADeletar = await userService.buscaUsuarioPorEmail(email);
+        let user = await userService.searchUserByEmail(email);
 
         try {
-            if (buscaADeletar) {
+            if (user) {
                 try {
-                    let alunoADeletar = await userService.deleteUser(email);
-                    res.json({ aluno: alunoADeletar, message: "Conta deletada" });
-                } catch (erro) {
-                    res.json({ erro: erro });
+                    let userForDelete = await userService.deleteUser(email);
+                    res.json({ user: userForDelete, message: "Deleted user account" });
+                } catch (error) {
+                    res.json({ error: error });
                 }
             } else {
-                res.status(400).json({ message: "Usuário não encontrado" });
+                res.status(400).json({ message: "User not found" });
             }
         } catch (error) {
             res.send(error);
@@ -154,4 +154,4 @@ class UsuarioController {
     }
 }
 
-module.exports = UsuarioController;
+module.exports = UserController;

@@ -1,34 +1,36 @@
-const UsuarioService = require("../services/UserServices");
+import UserService from "../services/UserService";
 
-const userService = new UsuarioService();
+const userService = new UserService();
 
-class Validacao {
-    async validarCadastro(email) {
+class Validation {
+    async validateRegister(email) {
         if (!email.endsWith("@alu.ufc.br") && !email.endsWith("@gmail.com")) {
             console.log(email);
-            return "Por favor volte e insira um email válido";
+            return "please insert a valid email";
         }
-        return "Cadastro validado com sucesso";
+        return "register success";
     }
 
-    async validarLogin(email, senhaUsada) {
+    /*
+    async validateLogin(email, usedPassword) {
         try {
-            let busca = await userService.buscaUsuarioPorEmail(email);
-            if (busca) {
-                let senha = busca.senha; 
-                if (senha !== senhaUsada) {
-                    return "Senha incorreta";
+            let user = await userService.buscaUsuarioPorEmail(email);
+            if (user) {
+                let senha = user.senha;
+                if (senha !== usedPassword) {
+                    return "incorrect password";
                 }
 
-                return "Login válido";
+                return "Login Success";
             } else {
-                return "Usuário não encontrado";
+                return "User not found";
             }
         } catch (err) {
-            console.error("Erro ao validar login:", err);
-            return "Erro ao validar login, por favor tente novamente mais tarde";
+            console.error("error valid login:", err);
+            return "error in valid login, please try again.";
         }
     }
+     */
 }
 
-module.exports = Validacao;
+module.exports = Validation;
