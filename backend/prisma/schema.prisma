@@ -4,109 +4,102 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
-model Usuario {
+model User {
   id         Int          @id @default(autoincrement())
   email      String       @unique
-  nome       String
-  senha      String
-  patrimonio Patrimonio[]
+  name       String
+  password      String
+  heritage Heritage[]
 }
 
-model Patrimonio {
+model Heritage {
   id         Int          @id @default(autoincrement())
-  bens       Bens[]
-  direitos   Direitos[]
-  obrigacoes Obrigacoes[]
-  usuarioId  Int
-  usuario    Usuario      @relation(fields: [usuarioId], references: [id])
+  assets       Assets[]
+  claims   Claims[]
+  obligations Obligations[]
+  userId  Int
+  user    User      @relation(fields: [userId], references: [id])
 }
 
-model Bens {
+model Assets {
   id                  Int                        @id @default(autoincrement())
-  imoveis             Imovel[]
-  terrenos            Terreno[]
-  veiculos            Veiculo[]
-  participacoes       ParticipacoesSocietarias[]
-  outrosinvestimentos OutrosInvestimentos[]
-  registros TabelaDeletarTodosOsBensDeUmaVezPorId[]
-  patrimonioId        Int
-  compoePatrimonio      Patrimonio                 @relation(fields: [patrimonioId], references: [id])
+  real_estate         Real_State[]
+  lands               Lands[]
+  vehicles            Vehicles[]
+  equity_interests       Equity_Interests[]
+  other_investments Other_Investments[]
+  heritageId        Int
+  heritage      Heritage                 @relation(fields: [heritageId], references: [id])
 }
 
-model Direitos {
+model Claims {
   id             Int        @id @default(autoincrement())
-  valor          Float
-  anoDeEntrada   DateTime
-  patrimonioId   Int
-  compoePatrimonio Patrimonio @relation(fields: [patrimonioId], references: [id])
+  value_of_claim          Float
+  year_of_entry   DateTime
+  heritageId   Int
+  heritage Heritage @relation(fields: [heritageId], references: [id])
 }
 
-model Obrigacoes {
+model Obligations {
   id             Int        @id @default(autoincrement())
-  valor          Float
-  anoDeEntrada   DateTime
-  patrimonioId   Int
-  compoePatrimonio Patrimonio @relation(fields: [patrimonioId], references: [id])
+  value_of_obligation          Float
+  year_of_entry   DateTime
+  heritageId   Int
+  heritage Heritage @relation(fields: [heritageId], references: [id])
 }
 
-model Imovel {
+model Real_State {
   id          Int      @id @default(autoincrement())
-  nome        String
-  descricao   String?
-  valor       Decimal
-  anoDeCompra DateTime
-  depreciacao Decimal
-  bemId       Int
-  bem         Bens     @relation(fields: [bemId], references: [id])
+  name        String
+  description   String?
+  value_of_real_state       Decimal
+  year_of_purchase DateTime
+  deprecation Decimal
+  assetId       Int
+  asset         Assets     @relation(fields: [assetId], references: [id])
 }
 
-model Terreno {
+model Lands {
   id          Int      @id @default(autoincrement())
-  nome        String
-  descricao   String?
-  valor       Decimal
-  anoDeCompra DateTime
-  depreciacao Decimal
-  bemId       Int
-  bem         Bens     @relation(fields: [bemId], references: [id])
+  name        String
+  description   String?
+  value_of_land       Decimal
+  year_of_purchase DateTime
+  deprecation Decimal
+  assetId       Int
+  asset         Assets     @relation(fields: [assetId], references: [id])
 }
 
-model Veiculo {
+model Vehicles {
   id          Int      @id @default(autoincrement())
-  nome        String
-  descricao   String?
-  valor       Decimal
-  anoDeCompra DateTime
-  depreciacao Decimal
-  bemId       Int
-  bem         Bens     @relation(fields: [bemId], references: [id])
+  name        String
+  description   String?
+  value_of_vehicle       Decimal
+  year_of_purchase DateTime
+  deprecation Decimal
+  assetId       Int
+  asset         Assets     @relation(fields: [assetId], references: [id])
 }
 
-model ParticipacoesSocietarias {
+model Equity_Interests {
   id          Int      @id @default(autoincrement())
-  tipo        String
-  descricao   String?
-  valor       Decimal
-  anoDeCompra DateTime
-  bemId       Int
-  bem         Bens     @relation(fields: [bemId], references: [id])
+  type        String
+  description   String?
+  value_of_equity_interests       Decimal
+  year_of_purchase DateTime
+  assetId       Int
+  asset         Assets     @relation(fields: [assetId], references: [id])
 }
 
-model OutrosInvestimentos {
+model Other_Investments {
   id          Int      @id @default(autoincrement())
-  tipo        String
-  descricao   String?
-  valor       Decimal
-  anoDeCompra DateTime
-  bemId       Int
-  bem         Bens     @relation(fields: [bemId], references: [id])
-}
-
-model TabelaDeletarTodosOsBensDeUmaVezPorId {
-    id      String @id @default(uuid())
-    bemId Int 
-    bem   Bens @relation(fields: [bemId], references: [id], onDelete: Cascade)
+  types        String
+  description   String?
+  value_of_other_investments       Decimal
+  year_of_purchase DateTime
+  assetId       Int
+  asset         Assets     @relation(fields: [assetId], references: [id])
 }
